@@ -1,50 +1,66 @@
-# Welcome to your Expo app 👋
+# TakeCare – Projeto Integrador SENAC
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Este repositório contém o desenvolvimento do aplicativo **TakeCare**, criado como parte da **2ª entrega do Projeto Integrador** do curso de **Tecnologia em Análise e Desenvolvimento de Sistemas (TADS/TSI)** – SENAC EAD.
 
-## Get started
+---
 
-1. Install dependencies
+## 📱 Descrição do Projeto
+O TakeCare é um aplicativo voltado ao **apoio no cuidado e monitoramento de idosos**, oferecendo funcionalidades simples e acessíveis para cuidadores e familiares, como cadastro de idosos, controle básico de medicamentos e simulação de alerta de emergência.
 
-   ```bash
-   npm install
-   ```
+O projeto foi inicialmente concebido na **1ª entrega do Projeto Integrador**, onde foram definidos os objetivos, o escopo e a viabilidade da solução.
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+## 🔄 Revisita do Projeto (2ª Entrega)
+Nesta segunda etapa, o projeto foi **revisitado e adaptado** para o desenvolvimento de um **MVP funcional**, mantendo os objetivos principais definidos anteriormente, porém com escopo reduzido e adequado ao contexto acadêmico.
 
-In the output, you'll find options to open the app in a
+A revisita permitiu priorizar as funcionalidades essenciais, focando na **validação da proposta** por meio de um aplicativo executável e navegável.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## 🎯 Objetivo desta Entrega
+Desenvolver um **MVP (Produto Mínimo Viável)** funcional que demonstre:
+- Funcionamento do aplicativo
+- Navegação entre telas
+- Coerência com a proposta inicial
+- Viabilidade técnica da solução
 
-## Get a fresh project
+---
 
-When you're ready, run:
+## ✅ Funcionalidades Implementadas
+- Tela inicial (Dashboard)
+- Cadastro de Idoso
+- Cadastro de Medicamento
+- Simulação de Alerta de Emergência (SOS)
+- Navegação entre telas
 
-```bash
-npm run reset-project
-```
+> As funcionalidades são simuladas, sem persistência em banco de dados, conforme o escopo definido para esta etapa.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+## 🛠️ Tecnologias Utilizadas
+- React Native
+- Expo
+- Expo Router
+- JavaScript / TypeScript
+- Git e GitHub
 
-To learn more about developing your project with Expo, look at the following resources:
+---
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## 🎥 Demonstração em Vídeo
+O funcionamento do aplicativo é apresentado em um **vídeo de até 1 minuto**, entregue junto à documentação desta etapa, demonstrando as principais funcionalidades desenvolvidas.
 
-## Join the community
+---
 
-Join our community of developers creating universal apps.
+## 👥 Integrantes do Grupo
+- Anna Caroline Moreira Picanço  
+- Denyzard Ubirajara Larios Moreira  
+- Marlon Rogério Correia Santana  
+- Matheus Nunes Friedrich  
+- Thiago Barbosa Silva  
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
+
+## 📌 Considerações Finais
+Este aplicativo representa um **MVP funcional**, desenvolvido para **validar a proposta do Projeto Integrador**, atendendo aos critérios estabelecidos para a 2ª entrega.
+``
