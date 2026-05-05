@@ -59,6 +59,12 @@ O funcionamento do aplicativo é apresentado em um **vídeo de até 1 minuto**, 
 - Matheus Nunes Friedrich  
 - Thiago Barbosa Silva  
 
+## 🎥 Demonstração em Vídeo
+
+O funcionamento do aplicativo **TakeCare** pode ser visualizado no vídeo abaixo:
+
+🔗 https://youtu.be/kh8lHRKAETs
+``
 ---
 
 ## 📌 Considerações Finais
