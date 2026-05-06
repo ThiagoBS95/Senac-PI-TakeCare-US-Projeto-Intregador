@@ -4,21 +4,21 @@ Este repositório contém o desenvolvimento do aplicativo **TakeCare**, criado c
 
 ---
 
-## 📱 Descrição do Projeto
+## Descrição do Projeto
 O TakeCare é um aplicativo voltado ao **apoio no cuidado e monitoramento de idosos**, oferecendo funcionalidades simples e acessíveis para cuidadores e familiares, como cadastro de idosos, controle básico de medicamentos e simulação de alerta de emergência.
 
 O projeto foi inicialmente concebido na **1ª entrega do Projeto Integrador**, onde foram definidos os objetivos, o escopo e a viabilidade da solução.
 
 ---
 
-## 🔄 Revisita do Projeto (2ª Entrega)
+## Revisita do Projeto (2ª Entrega)
 Nesta segunda etapa, o projeto foi **revisitado e adaptado** para o desenvolvimento de um **MVP funcional**, mantendo os objetivos principais definidos anteriormente, porém com escopo reduzido e adequado ao contexto acadêmico.
 
 A revisita permitiu priorizar as funcionalidades essenciais, focando na **validação da proposta** por meio de um aplicativo executável e navegável.
 
 ---
 
-## 🎯 Objetivo desta Entrega
+## Objetivo desta Entrega
 Desenvolver um **MVP (Produto Mínimo Viável)** funcional que demonstre:
 - Funcionamento do aplicativo
 - Navegação entre telas
@@ -27,7 +27,7 @@ Desenvolver um **MVP (Produto Mínimo Viável)** funcional que demonstre:
 
 ---
 
-## ✅ Funcionalidades Implementadas
+## Funcionalidades Implementadas
 - Tela inicial (Dashboard)
 - Cadastro de Idoso
 - Cadastro de Medicamento
@@ -38,7 +38,7 @@ Desenvolver um **MVP (Produto Mínimo Viável)** funcional que demonstre:
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 - React Native  
 - Expo  
 - Expo Router  
@@ -47,14 +47,14 @@ Desenvolver um **MVP (Produto Mínimo Viável)** funcional que demonstre:
 
 ---
 
-## 🎥 Demonstração em Vídeo
+##  Demonstração em Vídeo
 O funcionamento do aplicativo **TakeCare** pode ser visualizado no vídeo abaixo:
 
 🔗 https://youtu.be/kh8lHRKAETs
 
 ---
 
-## 👥 Integrantes do Grupo
+## Integrantes do Grupo
 - Anna Caroline Moreira Picanço  
 - Denyzard Ubirajara Larios Moreira  
 - Marlon Rogério Correia Santana  
