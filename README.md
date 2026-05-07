@@ -38,7 +38,7 @@ Desenvolver um **MVP (Produto Mínimo Viável)** funcional que demonstre:
 
 ---
 
-## Tecnologias Utilizadas
+##  Tecnologia Utilizadas
 - React Native  
 - Expo  
 - Expo Router  
@@ -63,5 +63,5 @@ O funcionamento do aplicativo **TakeCare** pode ser visualizado no vídeo abaixo
 
 ---
 
-## 📌 Considerações Finais
+##  Considerações Finais
 Este aplicativo representa um **MVP funcional**, desenvolvido para **validar a proposta do Projeto Integrador**, atendendo aos critérios estabelecidos para a 2ª entrega.
