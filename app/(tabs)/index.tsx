@@ -2,9 +2,14 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+import { ALVO_MINIMO, Tema } from '@/constants/tema';
+import { useEstilos } from '@/hooks/use-estilos';
 import { useDados } from '@/data/contexto';
+import { useTema } from '@/data/preferencias';
 
 export default function HomeScreen() {
+  const styles = useEstilos(criarEstilos);
+  const tema = useTema();
   const router = useRouter();
   const { idosos, medicamentos, doses, carregando, lembretesAtivos, ativarLembretes } = useDados();
 
@@ -22,6 +27,14 @@ export default function HomeScreen() {
         <View style={styles.header}>
           <Text style={styles.title}>TakeCare</Text>
           <Text style={styles.subtitle}>Seu bem-estar em primeiro lugar</Text>
+          <TouchableOpacity
+            style={styles.ajustes}
+            onPress={() => router.push('/ajustes')}
+            accessibilityRole="button"
+            accessibilityLabel="Acessibilidade: tamanho do texto e contraste">
+            <Ionicons name="text" size={18} color={tema.cor.destaque} />
+            <Text style={styles.ajustesTexto}>Acessibilidade</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.resumo}>
@@ -123,10 +136,11 @@ export default function HomeScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const criarEstilos = (t: Tema) =>
+  StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0A0A0A',
+    backgroundColor: t.cor.fundo,
   },
   conteudo: {
     paddingHorizontal: 24,
@@ -138,25 +152,43 @@ const styles = StyleSheet.create({
     marginBottom: 28,
   },
   title: {
-    fontSize: 42,
+    fontSize: t.fonte(42),
     fontWeight: '800',
-    color: '#FFFFFF',
+    color: t.cor.texto,
     textAlign: 'center',
     marginBottom: 8,
     letterSpacing: -0.5,
   },
+  ajustes: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginTop: 14,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    minHeight: ALVO_MINIMO,
+    borderRadius: 999,
+    borderWidth: t.borda,
+    borderColor: t.cor.borda,
+    backgroundColor: t.cor.superficieAlta,
+  },
+  ajustesTexto: {
+    color: t.cor.destaque,
+    fontSize: t.fonte(14),
+    fontWeight: '600',
+  },
   subtitle: {
-    fontSize: 16,
-    color: '#9CA3AF',
+    fontSize: t.fonte(16),
+    color: t.cor.textoFraco,
     textAlign: 'center',
     fontWeight: '400',
   },
   resumo: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#111827',
+    backgroundColor: t.cor.superficieAlta,
     borderWidth: 1,
-    borderColor: '#1F2937',
+    borderColor: t.cor.superficie,
     borderRadius: 16,
     paddingVertical: 16,
     marginBottom: 24,
@@ -167,31 +199,31 @@ const styles = StyleSheet.create({
     gap: 2,
   },
   resumoNumero: {
-    color: '#FFFFFF',
-    fontSize: 24,
+    color: t.cor.texto,
+    fontSize: t.fonte(24),
     fontWeight: '700',
   },
   resumoRotulo: {
-    color: '#9CA3AF',
-    fontSize: 12,
+    color: t.cor.textoFraco,
+    fontSize: t.fonte(12),
     textAlign: 'center',
   },
   resumoDivisor: {
     width: 1,
     height: 32,
-    backgroundColor: '#1F2937',
+    backgroundColor: t.cor.superficie,
   },
   buttonContainer: {
     gap: 16,
   },
   modernButton: {
-    backgroundColor: '#1F2937',
+    backgroundColor: t.cor.superficie,
     padding: 20,
     borderRadius: 20,
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#374151',
+    borderColor: t.cor.borda,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
@@ -202,7 +234,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 12,
-    backgroundColor: '#3B82F6',
+    backgroundColor: t.cor.primaria,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 16,
@@ -211,42 +243,42 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   buttonTitle: {
-    color: '#FFFFFF',
-    fontSize: 18,
+    color: t.cor.texto,
+    fontSize: t.fonte(18),
     fontWeight: '600',
     marginBottom: 4,
   },
   buttonDescription: {
-    color: '#9CA3AF',
-    fontSize: 14,
+    color: t.cor.textoFraco,
+    fontSize: t.fonte(14),
     fontWeight: '400',
   },
   aviso: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
-    backgroundColor: '#1C1917',
+    backgroundColor: t.cor.avisoFundo,
     borderWidth: 1,
-    borderColor: '#78350F',
+    borderColor: t.cor.avisoBorda,
     borderRadius: 16,
     padding: 16,
   },
   avisoTitulo: {
-    color: '#FCD34D',
-    fontSize: 16,
+    color: t.cor.aviso,
+    fontSize: t.fonte(16),
     fontWeight: '600',
     marginBottom: 2,
   },
   avisoTexto: {
-    color: '#D6D3D1',
-    fontSize: 13,
+    color: t.cor.textoMedio,
+    fontSize: t.fonte(13),
   },
   alertButton: {
-    backgroundColor: '#DC2626',
+    backgroundColor: t.cor.perigo,
     padding: 24,
     borderRadius: 20,
     marginTop: 8,
-    shadowColor: '#DC2626',
+    shadowColor: t.cor.perigo,
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.4,
     shadowRadius: 12,
@@ -258,8 +290,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   alertText: {
-    color: '#fff',
-    fontSize: 17,
+    color: t.cor.texto,
+    fontSize: t.fonte(17),
     fontWeight: 'bold',
     letterSpacing: 1,
     marginLeft: 10,

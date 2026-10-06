@@ -10,6 +10,8 @@ import {
   View,
 } from 'react-native';
 
+import { ALVO_MINIMO, Tema } from '@/constants/tema';
+import { useEstilos } from '@/hooks/use-estilos';
 import { useDados } from '@/data/contexto';
 import { Dose } from '@/data/tipos';
 
@@ -32,6 +34,7 @@ function horaDe(iso: string): string {
 }
 
 export default function HistoricoScreen() {
+  const styles = useEstilos(criarEstilos);
   const router = useRouter();
   const { doses, alertas, medicamentos, idosos } = useDados();
   const [filtroIdoso, setFiltroIdoso] = useState<string | null>(null);
@@ -209,10 +212,11 @@ export default function HistoricoScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const criarEstilos = (t: Tema) =>
+  StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0A0A0A',
+    backgroundColor: t.cor.fundo,
     paddingHorizontal: 24,
     paddingTop: 60,
   },
@@ -224,11 +228,15 @@ const styles = StyleSheet.create({
   backButton: {
     marginRight: 16,
     padding: 8,
+    minWidth: ALVO_MINIMO,
+    minHeight: ALVO_MINIMO,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
-    fontSize: 26,
+    fontSize: t.fonte(26),
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: t.cor.texto,
   },
   abas: {
     flexDirection: 'row',
@@ -240,26 +248,26 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 12,
     alignItems: 'center',
-    backgroundColor: '#111827',
+    backgroundColor: t.cor.superficieAlta,
     borderWidth: 1,
-    borderColor: '#1F2937',
+    borderColor: t.cor.superficie,
   },
   abaAtiva: {
-    backgroundColor: '#1F2937',
-    borderColor: '#3B82F6',
+    backgroundColor: t.cor.superficie,
+    borderColor: t.cor.primaria,
   },
   abaTexto: {
-    color: '#9CA3AF',
-    fontSize: 14,
+    color: t.cor.textoFraco,
+    fontSize: t.fonte(14),
     fontWeight: '600',
   },
   abaTextoAtivo: {
-    color: '#FFFFFF',
+    color: t.cor.texto,
   },
   resumo: {
-    backgroundColor: '#111827',
+    backgroundColor: t.cor.superficieAlta,
     borderWidth: 1,
-    borderColor: '#1F2937',
+    borderColor: t.cor.superficie,
     borderRadius: 16,
     padding: 18,
     alignItems: 'center',
@@ -267,13 +275,13 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   resumoNumero: {
-    color: '#16A34A',
-    fontSize: 32,
+    color: t.cor.sucesso,
+    fontSize: t.fonte(32),
     fontWeight: '800',
   },
   resumoTexto: {
-    color: '#9CA3AF',
-    fontSize: 14,
+    color: t.cor.textoFraco,
+    fontSize: t.fonte(14),
     textAlign: 'center',
   },
   filtros: {
@@ -287,27 +295,27 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 999,
     borderWidth: 1,
-    borderColor: '#374151',
-    backgroundColor: '#111827',
+    borderColor: t.cor.borda,
+    backgroundColor: t.cor.superficieAlta,
   },
   filtroAtivo: {
-    backgroundColor: '#3B82F6',
-    borderColor: '#3B82F6',
+    backgroundColor: t.cor.primaria,
+    borderColor: t.cor.primaria,
   },
   filtroTexto: {
-    color: '#D1D5DB',
-    fontSize: 14,
+    color: t.cor.textoMedio,
+    fontSize: t.fonte(14),
   },
   filtroTextoAtivo: {
-    color: '#FFFFFF',
+    color: t.cor.texto,
     fontWeight: '600',
   },
   lista: {
     paddingBottom: 40,
   },
   dia: {
-    color: '#9CA3AF',
-    fontSize: 13,
+    color: t.cor.textoFraco,
+    fontSize: t.fonte(13),
     fontWeight: '600',
     textTransform: 'uppercase',
     letterSpacing: 0.8,
@@ -315,9 +323,9 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   card: {
-    backgroundColor: '#1F2937',
+    backgroundColor: t.cor.superficie,
     borderWidth: 1,
-    borderColor: '#374151',
+    borderColor: t.cor.borda,
     borderRadius: 14,
     padding: 16,
     marginBottom: 10,
@@ -330,13 +338,13 @@ const styles = StyleSheet.create({
     gap: 2,
   },
   cardNome: {
-    color: '#FFFFFF',
-    fontSize: 16,
+    color: t.cor.texto,
+    fontSize: t.fonte(16),
     fontWeight: '600',
   },
   cardDetalhe: {
-    color: '#9CA3AF',
-    fontSize: 13,
+    color: t.cor.textoFraco,
+    fontSize: t.fonte(13),
   },
   vazio: {
     alignItems: 'center',
@@ -344,13 +352,13 @@ const styles = StyleSheet.create({
     paddingTop: 80,
   },
   vazioTitulo: {
-    color: '#E5E7EB',
-    fontSize: 18,
+    color: t.cor.textoMedio,
+    fontSize: t.fonte(18),
     fontWeight: '600',
   },
   vazioTexto: {
-    color: '#9CA3AF',
-    fontSize: 14,
+    color: t.cor.textoFraco,
+    fontSize: t.fonte(14),
     textAlign: 'center',
   },
 });

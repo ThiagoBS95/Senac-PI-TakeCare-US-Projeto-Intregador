@@ -12,10 +12,13 @@ import {
   View,
 } from 'react-native';
 
+import { ALVO_MINIMO, Tema } from '@/constants/tema';
+import { useEstilos } from '@/hooks/use-estilos';
 import { useDados } from '@/data/contexto';
 import { Medicamento } from '@/data/tipos';
 
 export default function MedicamentosScreen() {
+  const styles = useEstilos(criarEstilos);
   const router = useRouter();
   const { idosos, medicamentos, carregando, excluirMedicamento } = useDados();
 
@@ -140,10 +143,11 @@ export default function MedicamentosScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const criarEstilos = (t: Tema) =>
+  StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0A0A0A',
+    backgroundColor: t.cor.fundo,
     paddingHorizontal: 24,
     paddingTop: 60,
   },
@@ -155,11 +159,15 @@ const styles = StyleSheet.create({
   backButton: {
     marginRight: 16,
     padding: 8,
+    minWidth: ALVO_MINIMO,
+    minHeight: ALVO_MINIMO,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
-    fontSize: 26,
+    fontSize: t.fonte(26),
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: t.cor.texto,
   },
   centro: {
     marginTop: 60,
@@ -168,8 +176,8 @@ const styles = StyleSheet.create({
     paddingBottom: 100,
   },
   secao: {
-    color: '#9CA3AF',
-    fontSize: 13,
+    color: t.cor.textoFraco,
+    fontSize: t.fonte(13),
     fontWeight: '600',
     textTransform: 'uppercase',
     letterSpacing: 0.8,
@@ -177,14 +185,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   semItem: {
-    color: '#6B7280',
-    fontSize: 14,
+    color: t.cor.apagado,
+    fontSize: t.fonte(14),
     fontStyle: 'italic',
   },
   card: {
-    backgroundColor: '#1F2937',
+    backgroundColor: t.cor.superficie,
     borderWidth: 1,
-    borderColor: '#374151',
+    borderColor: t.cor.borda,
     borderRadius: 16,
     padding: 18,
     marginBottom: 12,
@@ -197,13 +205,13 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   cardNome: {
-    color: '#FFFFFF',
-    fontSize: 18,
+    color: t.cor.texto,
+    fontSize: t.fonte(18),
     fontWeight: '600',
   },
   cardDetalhe: {
-    color: '#9CA3AF',
-    fontSize: 14,
+    color: t.cor.textoFraco,
+    fontSize: t.fonte(14),
   },
   horarios: {
     flexDirection: 'row',
@@ -215,14 +223,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
-    backgroundColor: '#111827',
+    backgroundColor: t.cor.superficieAlta,
     borderRadius: 999,
     paddingHorizontal: 10,
     paddingVertical: 5,
   },
   horarioTexto: {
-    color: '#93C5FD',
-    fontSize: 13,
+    color: t.cor.destaque,
+    fontSize: t.fonte(13),
     fontWeight: '600',
   },
   acoes: {
@@ -230,15 +238,15 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   acaoDose: {
-    backgroundColor: '#064E3B',
+    backgroundColor: t.cor.sucessoFundo,
   },
   acao: {
-    width: 44,
-    height: 44,
+    width: ALVO_MINIMO,
+    height: ALVO_MINIMO,
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#111827',
+    backgroundColor: t.cor.superficieAlta,
   },
   vazio: {
     alignItems: 'center',
@@ -246,13 +254,13 @@ const styles = StyleSheet.create({
     paddingTop: 80,
   },
   vazioTitulo: {
-    color: '#E5E7EB',
-    fontSize: 18,
+    color: t.cor.textoMedio,
+    fontSize: t.fonte(18),
     fontWeight: '600',
   },
   vazioTexto: {
-    color: '#9CA3AF',
-    fontSize: 14,
+    color: t.cor.textoFraco,
+    fontSize: t.fonte(14),
     textAlign: 'center',
   },
   novo: {
@@ -260,7 +268,7 @@ const styles = StyleSheet.create({
     left: 24,
     right: 24,
     bottom: 32,
-    backgroundColor: '#3B82F6',
+    backgroundColor: t.cor.primaria,
     borderRadius: 14,
     paddingVertical: 16,
     flexDirection: 'row',
@@ -270,8 +278,8 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   novoTexto: {
-    color: '#FFFFFF',
-    fontSize: 16,
+    color: t.cor.texto,
+    fontSize: t.fonte(16),
     fontWeight: '600',
   },
 });

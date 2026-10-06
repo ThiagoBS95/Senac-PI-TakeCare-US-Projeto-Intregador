@@ -3,6 +3,8 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+import { Tema } from '@/constants/tema';
+import { useEstilos } from '@/hooks/use-estilos';
 import { useDados } from '@/data/contexto';
 import * as emergencia from '@/data/emergencia';
 import { Localizacao } from '@/data/emergencia';
@@ -18,6 +20,7 @@ const MOTIVOS: Record<string, string> = {
 };
 
 export default function EmergenciaScreen() {
+  const styles = useEstilos(criarEstilos);
   const router = useRouter();
   const { idosoId } = useLocalSearchParams<{ idosoId?: string }>();
   const { idosos, registrarAlerta, anotarAcaoDoAlerta } = useDados();
@@ -182,10 +185,11 @@ export default function EmergenciaScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const criarEstilos = (t: Tema) =>
+  StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#140404',
+    backgroundColor: t.cor.fundo,
   },
   conteudo: {
     paddingHorizontal: 24,
@@ -197,29 +201,29 @@ const styles = StyleSheet.create({
     width: 72,
     height: 72,
     borderRadius: 24,
-    backgroundColor: '#DC2626',
+    backgroundColor: t.cor.perigo,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 16,
   },
   titulo: {
-    color: '#FFFFFF',
-    fontSize: 28,
+    color: t.cor.texto,
+    fontSize: t.fonte(28),
     fontWeight: '800',
     textAlign: 'center',
   },
   subtitulo: {
-    color: '#FCA5A5',
-    fontSize: 17,
+    color: t.cor.perigoClaro,
+    fontSize: t.fonte(17),
     marginTop: 4,
     marginBottom: 28,
     textAlign: 'center',
   },
   cartao: {
     width: '100%',
-    backgroundColor: '#1F2937',
+    backgroundColor: t.cor.superficie,
     borderWidth: 1,
-    borderColor: '#374151',
+    borderColor: t.cor.borda,
     borderRadius: 16,
     padding: 16,
     gap: 6,
@@ -231,13 +235,13 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   cartaoTexto: {
-    color: '#FFFFFF',
-    fontSize: 16,
+    color: t.cor.texto,
+    fontSize: t.fonte(16),
     fontWeight: '600',
   },
   coordenadas: {
-    color: '#9CA3AF',
-    fontSize: 14,
+    color: t.cor.textoFraco,
+    fontSize: t.fonte(14),
     lineHeight: 20,
   },
   acoes: {
@@ -254,19 +258,19 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   ligar: {
-    backgroundColor: '#16A34A',
+    backgroundColor: t.cor.sucesso,
   },
   mensagem: {
-    backgroundColor: '#1D4ED8',
+    backgroundColor: t.cor.primaria,
   },
   botaoTexto: {
-    color: '#FFFFFF',
-    fontSize: 18,
+    color: t.cor.texto,
+    fontSize: t.fonte(18),
     fontWeight: '700',
   },
   botaoDetalhe: {
-    color: '#E5E7EB',
-    fontSize: 13,
+    color: t.cor.textoMedio,
+    fontSize: t.fonte(13),
     marginTop: 2,
   },
   aviso: {
@@ -274,21 +278,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 12,
     alignItems: 'flex-start',
-    backgroundColor: '#1C1917',
+    backgroundColor: t.cor.avisoFundo,
     borderWidth: 1,
-    borderColor: '#78350F',
+    borderColor: t.cor.avisoBorda,
     borderRadius: 16,
     padding: 16,
   },
   avisoTexto: {
     flex: 1,
-    color: '#D6D3D1',
-    fontSize: 14,
+    color: t.cor.textoMedio,
+    fontSize: t.fonte(14),
     lineHeight: 20,
   },
   registro: {
-    color: '#86EFAC',
-    fontSize: 14,
+    color: t.cor.sucessoClaro,
+    fontSize: t.fonte(14),
     marginTop: 20,
     textAlign: 'center',
   },
@@ -297,11 +301,11 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 32,
     borderRadius: 12,
-    backgroundColor: '#1F2937',
+    backgroundColor: t.cor.superficie,
   },
   voltarTexto: {
-    color: '#FFFFFF',
-    fontSize: 16,
+    color: t.cor.texto,
+    fontSize: t.fonte(16),
     fontWeight: '600',
   },
 });

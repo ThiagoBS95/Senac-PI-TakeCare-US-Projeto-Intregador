@@ -7,12 +7,15 @@
  */
 import { Ionicons } from '@expo/vector-icons';
 import { usePathname, useRouter } from 'expo-router';
+import { Tema } from '@/constants/tema';
+import { useEstilos } from '@/hooks/use-estilos';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 /** Telas em que o botão atrapalharia em vez de ajudar. */
 const OCULTO_EM = ['/emergencia', '/dose'];
 
 export function BotaoSOS() {
+  const styles = useEstilos(criarEstilos);
   const router = useRouter();
   const caminho = usePathname();
 
@@ -32,7 +35,8 @@ export function BotaoSOS() {
   );
 }
 
-const styles = StyleSheet.create({
+const criarEstilos = (t: Tema) =>
+  StyleSheet.create({
   botao: {
     position: 'absolute',
     right: 20,
@@ -41,19 +45,19 @@ const styles = StyleSheet.create({
     height: 64,
     borderRadius: 32,
     paddingHorizontal: 16,
-    backgroundColor: '#DC2626',
+    backgroundColor: t.cor.perigo,
     alignItems: 'center',
     justifyContent: 'center',
     gap: 1,
     elevation: 10,
-    shadowColor: '#DC2626',
+    shadowColor: t.cor.perigo,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.5,
     shadowRadius: 10,
   },
   texto: {
-    color: '#FFFFFF',
-    fontSize: 12,
+    color: t.cor.texto,
+    fontSize: t.fonte(12),
     fontWeight: '800',
     letterSpacing: 0.5,
   },

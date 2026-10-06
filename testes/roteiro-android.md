@@ -54,3 +54,16 @@ de concluir que é defeito do código.
 | 20 | Acionar sem telefone cadastrado | A tela orienta a cadastrar o telefone do responsável |
 | 21 | Abrir qualquer tela interna (lista, histórico) | O botão SOS flutuante aparece no canto |
 | 22 | Ver Histórico → aba Emergências | Cada acionamento aparece com data, hora, localização e as ações feitas |
+
+---
+
+# Acessibilidade (aparelho Android)
+
+| # | Passo | Esperado |
+|---|---|---|
+| 23 | Painel → Acessibilidade → Texto "Maior" | Todas as telas aumentam a fonte, sem cortar texto nem quebrar o leiaute |
+| 24 | Ligar "Alto contraste" | Fundo preto, bordas brancas visíveis e texto branco em todas as telas |
+| 25 | Fechar e reabrir o aplicativo | As preferências continuam valendo |
+| 26 | Ativar o TalkBack (leitor de tela) e percorrer o painel | Cada botão é anunciado pelo que faz: "Idosos", "Acionar alerta de emergência", "Acessibilidade" |
+| 27 | Com TalkBack ligado, abrir a lista de idosos | Os botões de editar e excluir são anunciados com o nome da pessoa |
+| 28 | Aumentar a fonte do sistema para o máximo (Configurações do Android) | O aplicativo continua legível e utilizável |

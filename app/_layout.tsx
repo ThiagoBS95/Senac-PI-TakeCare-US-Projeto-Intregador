@@ -6,6 +6,7 @@ import 'react-native-reanimated';
 import { BotaoSOS } from '@/components/botao-sos';
 import { OuvinteNotificacoes } from '@/components/ouvinte-notificacoes';
 import { ProvedorDados } from '@/data/contexto';
+import { ProvedorPreferencias } from '@/data/preferencias';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
 export const unstable_settings = {
@@ -16,7 +17,8 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <ProvedorDados>
+    <ProvedorPreferencias>
+      <ProvedorDados>
       <OuvinteNotificacoes />
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack>
@@ -28,11 +30,13 @@ export default function RootLayout() {
           <Stack.Screen name="medicamentos" options={{ headerShown: false }} />
           <Stack.Screen name="historico" options={{ headerShown: false }} />
           <Stack.Screen name="dose" options={{ headerShown: false }} />
+          <Stack.Screen name="ajustes" options={{ headerShown: false }} />
           <Stack.Screen name="emergencia" options={{ headerShown: false, presentation: 'modal' }} />
         </Stack>
         <BotaoSOS />
         <StatusBar style="light" />
       </ThemeProvider>
-    </ProvedorDados>
+      </ProvedorDados>
+    </ProvedorPreferencias>
   );
 }

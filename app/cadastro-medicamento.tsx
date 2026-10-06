@@ -14,6 +14,8 @@ import {
   View,
 } from 'react-native';
 
+import { ALVO_MINIMO, Tema } from '@/constants/tema';
+import { useEstilos } from '@/hooks/use-estilos';
 import { useDados } from '@/data/contexto';
 
 /** Aceita 8, 08, 8:0, 0800… e devolve HH:MM, ou null se não for hora válida. */
@@ -29,6 +31,7 @@ function normalizarHorario(bruto: string): string | null {
 }
 
 export default function CadastroMedicamentoScreen() {
+  const styles = useEstilos(criarEstilos);
   const router = useRouter();
   const { id, idosoId: idosoParam } = useLocalSearchParams<{ id?: string; idosoId?: string }>();
   const { idosos, medicamentos, salvarMedicamento } = useDados();
@@ -246,10 +249,11 @@ export default function CadastroMedicamentoScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const criarEstilos = (t: Tema) =>
+  StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0A0A0A',
+    backgroundColor: t.cor.fundo,
     paddingHorizontal: 24,
     paddingTop: 60,
   },
@@ -261,11 +265,15 @@ const styles = StyleSheet.create({
   backButton: {
     marginRight: 16,
     padding: 8,
+    minWidth: ALVO_MINIMO,
+    minHeight: ALVO_MINIMO,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
-    fontSize: 26,
+    fontSize: t.fonte(26),
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: t.cor.texto,
     flexShrink: 1,
   },
   form: {
@@ -276,20 +284,20 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   label: {
-    fontSize: 16,
+    fontSize: t.fonte(16),
     fontWeight: '500',
-    color: '#FFFFFF',
+    color: t.cor.texto,
     marginBottom: 4,
   },
   input: {
-    backgroundColor: '#1F2937',
+    backgroundColor: t.cor.superficie,
     borderWidth: 1,
-    borderColor: '#374151',
+    borderColor: t.cor.borda,
     borderRadius: 12,
     paddingHorizontal: 16,
     paddingVertical: 16,
-    fontSize: 16,
-    color: '#FFFFFF',
+    fontSize: t.fonte(16),
+    color: t.cor.texto,
   },
   linhaHorario: {
     flexDirection: 'row',
@@ -303,7 +311,7 @@ const styles = StyleSheet.create({
     width: 52,
     height: 52,
     borderRadius: 12,
-    backgroundColor: '#3B82F6',
+    backgroundColor: t.cor.primaria,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -317,19 +325,19 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 999,
     borderWidth: 1,
-    borderColor: '#374151',
-    backgroundColor: '#111827',
+    borderColor: t.cor.borda,
+    backgroundColor: t.cor.superficieAlta,
   },
   chipAtivo: {
-    backgroundColor: '#3B82F6',
-    borderColor: '#3B82F6',
+    backgroundColor: t.cor.primaria,
+    borderColor: t.cor.primaria,
   },
   chipTexto: {
-    color: '#D1D5DB',
-    fontSize: 14,
+    color: t.cor.textoMedio,
+    fontSize: t.fonte(14),
   },
   chipTextoAtivo: {
-    color: '#FFFFFF',
+    color: t.cor.texto,
     fontWeight: '600',
   },
   horarioChip: {
@@ -339,21 +347,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 10,
     borderRadius: 999,
-    backgroundColor: '#1F2937',
+    backgroundColor: t.cor.superficie,
     borderWidth: 1,
-    borderColor: '#374151',
+    borderColor: t.cor.borda,
   },
   horarioTexto: {
-    color: '#FFFFFF',
-    fontSize: 15,
+    color: t.cor.texto,
+    fontSize: t.fonte(15),
     fontWeight: '600',
   },
   ajuda: {
-    color: '#9CA3AF',
-    fontSize: 13,
+    color: t.cor.textoFraco,
+    fontSize: t.fonte(13),
   },
   saveButton: {
-    backgroundColor: '#3B82F6',
+    backgroundColor: t.cor.primaria,
     paddingVertical: 18,
     borderRadius: 12,
     alignItems: 'center',
@@ -364,8 +372,8 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   saveButtonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
+    color: t.cor.texto,
+    fontSize: t.fonte(16),
     fontWeight: '600',
   },
   vazio: {
@@ -374,18 +382,18 @@ const styles = StyleSheet.create({
     paddingTop: 60,
   },
   vazioTitulo: {
-    color: '#E5E7EB',
-    fontSize: 18,
+    color: t.cor.textoMedio,
+    fontSize: t.fonte(18),
     fontWeight: '600',
   },
   vazioTexto: {
-    color: '#9CA3AF',
-    fontSize: 14,
+    color: t.cor.textoFraco,
+    fontSize: t.fonte(14),
     textAlign: 'center',
   },
   vazioBotao: {
     marginTop: 12,
-    backgroundColor: '#3B82F6',
+    backgroundColor: t.cor.primaria,
     paddingVertical: 14,
     paddingHorizontal: 24,
     borderRadius: 12,
