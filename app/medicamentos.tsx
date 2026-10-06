@@ -85,6 +85,18 @@ export default function MedicamentosScreen() {
 
               <View style={styles.acoes}>
                 <TouchableOpacity
+                  style={[styles.acao, styles.acaoDose]}
+                  onPress={() =>
+                    router.push({
+                      pathname: '/dose',
+                      params: { medicamentoId: item.id, horario: item.horarios[0] ?? '' },
+                    })
+                  }
+                  accessibilityRole="button"
+                  accessibilityLabel={`Registrar dose de ${item.nome}`}>
+                  <Ionicons name="checkmark-done" size={22} color="#86EFAC" />
+                </TouchableOpacity>
+                <TouchableOpacity
                   style={styles.acao}
                   onPress={() =>
                     router.push({ pathname: '/cadastro-medicamento', params: { id: item.id } })
@@ -216,6 +228,9 @@ const styles = StyleSheet.create({
   acoes: {
     flexDirection: 'row',
     gap: 4,
+  },
+  acaoDose: {
+    backgroundColor: '#064E3B',
   },
   acao: {
     width: 44,

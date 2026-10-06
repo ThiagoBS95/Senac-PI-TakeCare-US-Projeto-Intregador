@@ -6,7 +6,7 @@ import { useDados } from '@/data/contexto';
 
 export default function HomeScreen() {
   const router = useRouter();
-  const { idosos, medicamentos, carregando } = useDados();
+  const { idosos, medicamentos, doses, carregando, lembretesAtivos, ativarLembretes } = useDados();
 
   const totalDoses = medicamentos.reduce((soma, m) => soma + m.horarios.length, 0);
 
@@ -75,6 +75,37 @@ export default function HomeScreen() {
             </View>
             <Ionicons name="chevron-forward" size={20} color="#6B7280" />
           </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.modernButton}
+            onPress={() => router.push('/historico')}
+            accessibilityRole="button">
+            <View style={styles.buttonIcon}>
+              <Ionicons name="document-text" size={24} color="#fff" />
+            </View>
+            <View style={styles.buttonContent}>
+              <Text style={styles.buttonTitle}>Histórico</Text>
+              <Text style={styles.buttonDescription}>
+                {doses.length === 0 ? 'Nenhuma dose registrada' : `${doses.length} dose(s) registradas`}
+              </Text>
+            </View>
+            <Ionicons name="chevron-forward" size={20} color="#6B7280" />
+          </TouchableOpacity>
+
+          {lembretesAtivos === false && medicamentos.length > 0 && (
+            <TouchableOpacity
+              style={styles.aviso}
+              onPress={ativarLembretes}
+              accessibilityRole="button">
+              <Ionicons name="notifications-off" size={22} color="#FCD34D" />
+              <View style={styles.buttonContent}>
+                <Text style={styles.avisoTitulo}>Lembretes desativados</Text>
+                <Text style={styles.avisoTexto}>
+                  Toque para permitir as notificações e receber os horários.
+                </Text>
+              </View>
+            </TouchableOpacity>
+          )}
 
           <TouchableOpacity
             style={styles.alertButton}
@@ -189,6 +220,26 @@ const styles = StyleSheet.create({
     color: '#9CA3AF',
     fontSize: 14,
     fontWeight: '400',
+  },
+  aviso: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    backgroundColor: '#1C1917',
+    borderWidth: 1,
+    borderColor: '#78350F',
+    borderRadius: 16,
+    padding: 16,
+  },
+  avisoTitulo: {
+    color: '#FCD34D',
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 2,
+  },
+  avisoTexto: {
+    color: '#D6D3D1',
+    fontSize: 13,
   },
   alertButton: {
     backgroundColor: '#DC2626',
