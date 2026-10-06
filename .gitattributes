@@ -1,0 +1,16 @@
+# Normaliza o fim de linha: sem isto, quem edita no Windows gera diffs de
+# arquivo inteiro (CRLF x LF) e a revisão de código fica impossível.
+* text=auto eol=lf
+
+# Arquivos binários não devem ser convertidos.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
+*.mp4 binary
+*.pdf binary
