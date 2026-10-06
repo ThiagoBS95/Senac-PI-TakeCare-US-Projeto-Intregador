@@ -11,10 +11,13 @@ import {
   View,
 } from 'react-native';
 
+import { ALVO_MINIMO, Tema } from '@/constants/tema';
+import { useEstilos } from '@/hooks/use-estilos';
 import { useDados } from '@/data/contexto';
 import { Idoso } from '@/data/tipos';
 
 export default function IdososScreen() {
+  const styles = useEstilos(criarEstilos);
   const router = useRouter();
   const { idosos, carregando, excluirIdoso, medicamentosDoIdoso } = useDados();
 
@@ -116,10 +119,11 @@ export default function IdososScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const criarEstilos = (t: Tema) =>
+  StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0A0A0A',
+    backgroundColor: t.cor.fundo,
     paddingHorizontal: 24,
     paddingTop: 60,
   },
@@ -131,11 +135,15 @@ const styles = StyleSheet.create({
   backButton: {
     marginRight: 16,
     padding: 8,
+    minWidth: ALVO_MINIMO,
+    minHeight: ALVO_MINIMO,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
-    fontSize: 26,
+    fontSize: t.fonte(26),
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: t.cor.texto,
     flexShrink: 1,
   },
   centro: {
@@ -146,9 +154,9 @@ const styles = StyleSheet.create({
     paddingBottom: 100,
   },
   card: {
-    backgroundColor: '#1F2937',
+    backgroundColor: t.cor.superficie,
     borderWidth: 1,
-    borderColor: '#374151',
+    borderColor: t.cor.borda,
     borderRadius: 16,
     padding: 18,
     flexDirection: 'row',
@@ -160,25 +168,25 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   cardNome: {
-    color: '#FFFFFF',
-    fontSize: 18,
+    color: t.cor.texto,
+    fontSize: t.fonte(18),
     fontWeight: '600',
   },
   cardDetalhe: {
-    color: '#9CA3AF',
-    fontSize: 14,
+    color: t.cor.textoFraco,
+    fontSize: t.fonte(14),
   },
   acoes: {
     flexDirection: 'row',
     gap: 4,
   },
   acao: {
-    width: 44,
-    height: 44,
+    width: ALVO_MINIMO,
+    height: ALVO_MINIMO,
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#111827',
+    backgroundColor: t.cor.superficieAlta,
   },
   vazio: {
     alignItems: 'center',
@@ -187,13 +195,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   vazioTitulo: {
-    color: '#E5E7EB',
-    fontSize: 18,
+    color: t.cor.textoMedio,
+    fontSize: t.fonte(18),
     fontWeight: '600',
   },
   vazioTexto: {
-    color: '#9CA3AF',
-    fontSize: 14,
+    color: t.cor.textoFraco,
+    fontSize: t.fonte(14),
     textAlign: 'center',
   },
   novo: {
@@ -201,7 +209,7 @@ const styles = StyleSheet.create({
     left: 24,
     right: 24,
     bottom: 32,
-    backgroundColor: '#3B82F6',
+    backgroundColor: t.cor.primaria,
     borderRadius: 14,
     paddingVertical: 16,
     flexDirection: 'row',
@@ -211,8 +219,8 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   novoTexto: {
-    color: '#FFFFFF',
-    fontSize: 16,
+    color: t.cor.texto,
+    fontSize: t.fonte(16),
     fontWeight: '600',
   },
 });

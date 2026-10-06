@@ -3,6 +3,8 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+import { Tema } from '@/constants/tema';
+import { useEstilos } from '@/hooks/use-estilos';
 import { useDados } from '@/data/contexto';
 import * as notificacoes from '@/data/notificacoes';
 import { Dose } from '@/data/tipos';
@@ -12,6 +14,7 @@ import { Dose } from '@/data/tipos';
  * que é o que alimenta o histórico e, mais adiante, o indicador de adesão.
  */
 export default function DoseScreen() {
+  const styles = useEstilos(criarEstilos);
   const router = useRouter();
   const { medicamentoId, horario } = useLocalSearchParams<{
     medicamentoId?: string;
@@ -106,10 +109,11 @@ export default function DoseScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const criarEstilos = (t: Tema) =>
+  StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0A0A0A',
+    backgroundColor: t.cor.fundo,
     paddingHorizontal: 24,
     paddingTop: 80,
   },
@@ -122,26 +126,26 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: 20,
-    backgroundColor: '#3B82F6',
+    backgroundColor: t.cor.primaria,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 12,
   },
   horario: {
-    color: '#93C5FD',
-    fontSize: 16,
+    color: t.cor.destaque,
+    fontSize: t.fonte(16),
     fontWeight: '600',
     letterSpacing: 1,
   },
   nome: {
-    color: '#FFFFFF',
-    fontSize: 30,
+    color: t.cor.texto,
+    fontSize: t.fonte(30),
     fontWeight: '700',
     textAlign: 'center',
   },
   detalhe: {
-    color: '#9CA3AF',
-    fontSize: 16,
+    color: t.cor.textoFraco,
+    fontSize: t.fonte(16),
     textAlign: 'center',
   },
   acoes: {
@@ -157,17 +161,17 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   tomou: {
-    backgroundColor: '#16A34A',
+    backgroundColor: t.cor.sucesso,
   },
   adiar: {
-    backgroundColor: '#334155',
+    backgroundColor: t.cor.neutroEscuro,
   },
   naoTomou: {
-    backgroundColor: '#B91C1C',
+    backgroundColor: t.cor.perigo,
   },
   botaoTexto: {
-    color: '#FFFFFF',
-    fontSize: 18,
+    color: t.cor.texto,
+    fontSize: t.fonte(18),
     fontWeight: '700',
   },
   vazio: {
@@ -176,13 +180,13 @@ const styles = StyleSheet.create({
     paddingTop: 80,
   },
   vazioTitulo: {
-    color: '#E5E7EB',
-    fontSize: 18,
+    color: t.cor.textoMedio,
+    fontSize: t.fonte(18),
     fontWeight: '600',
   },
   vazioTexto: {
-    color: '#9CA3AF',
-    fontSize: 14,
+    color: t.cor.textoFraco,
+    fontSize: t.fonte(14),
     textAlign: 'center',
   },
   secundario: {
@@ -190,11 +194,11 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 24,
     borderRadius: 12,
-    backgroundColor: '#1F2937',
+    backgroundColor: t.cor.superficie,
   },
   secundarioTexto: {
-    color: '#FFFFFF',
-    fontSize: 16,
+    color: t.cor.texto,
+    fontSize: t.fonte(16),
     fontWeight: '600',
   },
 });

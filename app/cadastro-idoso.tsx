@@ -14,9 +14,12 @@ import {
   View,
 } from 'react-native';
 
+import { ALVO_MINIMO, Tema } from '@/constants/tema';
+import { useEstilos } from '@/hooks/use-estilos';
 import { useDados } from '@/data/contexto';
 
 export default function CadastroIdosoScreen() {
+  const styles = useEstilos(criarEstilos);
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id?: string }>();
   const { idosos, salvarIdoso } = useDados();
@@ -162,10 +165,11 @@ export default function CadastroIdosoScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const criarEstilos = (t: Tema) =>
+  StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0A0A0A',
+    backgroundColor: t.cor.fundo,
     paddingHorizontal: 24,
     paddingTop: 60,
   },
@@ -177,11 +181,15 @@ const styles = StyleSheet.create({
   backButton: {
     marginRight: 16,
     padding: 8,
+    minWidth: ALVO_MINIMO,
+    minHeight: ALVO_MINIMO,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
-    fontSize: 28,
+    fontSize: t.fonte(28),
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: t.cor.texto,
     flexShrink: 1,
   },
   form: {
@@ -192,32 +200,32 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   label: {
-    fontSize: 16,
+    fontSize: t.fonte(16),
     fontWeight: '500',
-    color: '#FFFFFF',
+    color: t.cor.texto,
     marginBottom: 4,
   },
   input: {
-    backgroundColor: '#1F2937',
+    backgroundColor: t.cor.superficie,
     borderWidth: 1,
-    borderColor: '#374151',
+    borderColor: t.cor.borda,
     borderRadius: 12,
     paddingHorizontal: 16,
     paddingVertical: 16,
-    fontSize: 16,
-    color: '#FFFFFF',
+    fontSize: t.fonte(16),
+    color: t.cor.texto,
   },
   ajuda: {
-    color: '#9CA3AF',
-    fontSize: 13,
+    color: t.cor.textoFraco,
+    fontSize: t.fonte(13),
   },
   saveButton: {
-    backgroundColor: '#3B82F6',
+    backgroundColor: t.cor.primaria,
     paddingVertical: 18,
     borderRadius: 12,
     alignItems: 'center',
     marginTop: 12,
-    shadowColor: '#3B82F6',
+    shadowColor: t.cor.primaria,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
@@ -227,8 +235,8 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   saveButtonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
+    color: t.cor.texto,
+    fontSize: t.fonte(16),
     fontWeight: '600',
   },
 });
