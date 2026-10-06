@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { Alert, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { useDados } from '@/data/contexto';
 
@@ -11,7 +11,7 @@ export default function HomeScreen() {
   const totalDoses = medicamentos.reduce((soma, m) => soma + m.horarios.length, 0);
 
   const handleAlertaSOS = () => {
-    Alert.alert('Emergência acionada', 'O cuidador foi notificado.');
+    router.push('/emergencia');
   };
 
   return (

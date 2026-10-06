@@ -1,5 +1,5 @@
 /**
- * Modelo de dados do TakeCare (eixo A — registro real).
+ * Modelo de dados do TakeCare.
  * Tudo que é gravado no dispositivo passa por estes tipos.
  */
 
@@ -34,19 +34,34 @@ export type Dose = {
   situacao: 'tomada' | 'adiada' | 'nao_tomada';
 };
 
+/** Acionamento do botão de emergência (eixo C). */
+export type Alerta = {
+  id: string;
+  idosoId: string;
+  acionadoEm: string;
+  latitude: number | null;
+  longitude: number | null;
+  /** Por que a localização não veio, quando for o caso. */
+  observacaoLocalizacao: string | null;
+  /** O que o usuário chegou a fazer depois de acionar. */
+  acoes: ('ligou' | 'mensagem')[];
+};
+
 /** Tudo que mora no armazenamento local, com a versão do esquema. */
 export type Banco = {
   versao: number;
   idosos: Idoso[];
   medicamentos: Medicamento[];
   doses: Dose[];
+  alertas: Alerta[];
 };
 
-export const VERSAO_ESQUEMA = 1;
+export const VERSAO_ESQUEMA = 2;
 
 export const BANCO_VAZIO: Banco = {
   versao: VERSAO_ESQUEMA,
   idosos: [],
   medicamentos: [],
   doses: [],
+  alertas: [],
 };

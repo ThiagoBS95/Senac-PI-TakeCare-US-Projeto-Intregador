@@ -33,8 +33,9 @@ function horaDe(iso: string): string {
 
 export default function HistoricoScreen() {
   const router = useRouter();
-  const { doses, medicamentos, idosos } = useDados();
+  const { doses, alertas, medicamentos, idosos } = useDados();
   const [filtroIdoso, setFiltroIdoso] = useState<string | null>(null);
+  const [aba, setAba] = useState<'doses' | 'emergencias'>('doses');
 
   const secoes = useMemo(() => {
     const filtradas = filtroIdoso ? doses.filter((d) => d.idosoId === filtroIdoso) : doses;
@@ -68,6 +69,74 @@ export default function HistoricoScreen() {
         <Text style={styles.title}>Histórico de doses</Text>
       </View>
 
+      <View style={styles.abas}>
+        <TouchableOpacity
+          style={[styles.aba, aba === 'doses' && styles.abaAtiva]}
+          onPress={() => setAba('doses')}
+          accessibilityRole="button">
+          <Text style={[styles.abaTexto, aba === 'doses' && styles.abaTextoAtivo]}>
+            Doses ({doses.length})
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.aba, aba === 'emergencias' && styles.abaAtiva]}
+          onPress={() => setAba('emergencias')}
+          accessibilityRole="button">
+          <Text style={[styles.abaTexto, aba === 'emergencias' && styles.abaTextoAtivo]}>
+            Emergências ({alertas.length})
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      {aba === 'emergencias' ? (
+        <SectionList
+          sections={[{ title: 'Acionamentos', data: [...alertas].reverse() }]}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={styles.lista}
+          stickySectionHeadersEnabled={false}
+          renderSectionHeader={() => null}
+          renderItem={({ item }) => {
+            const idoso = idosos.find((i) => i.id === item.idosoId);
+            const temLocal = item.latitude !== null && item.longitude !== null;
+            return (
+              <View style={styles.card}>
+                <Ionicons name="warning" size={24} color="#DC2626" />
+                <View style={styles.cardTexto}>
+                  <Text style={styles.cardNome}>
+                    {new Date(item.acionadoEm).toLocaleString('pt-BR', {
+                      day: '2-digit',
+                      month: '2-digit',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}
+                  </Text>
+                  {idoso ? <Text style={styles.cardDetalhe}>{idoso.nome}</Text> : null}
+                  <Text style={styles.cardDetalhe}>
+                    {temLocal
+                      ? `Localização: ${item.latitude!.toFixed(5)}, ${item.longitude!.toFixed(5)}`
+                      : item.observacaoLocalizacao ?? 'Sem localização'}
+                  </Text>
+                  <Text style={styles.cardDetalhe}>
+                    {item.acoes.length === 0
+                      ? 'Nenhuma ação registrada'
+                      : `Ações: ${item.acoes.join(', ')}`}
+                  </Text>
+                </View>
+              </View>
+            );
+          }}
+          ListEmptyComponent={
+            <View style={styles.vazio}>
+              <Ionicons name="shield-checkmark-outline" size={48} color="#4B5563" />
+              <Text style={styles.vazioTitulo}>Nenhum acionamento</Text>
+              <Text style={styles.vazioTexto}>
+                Os alertas de emergência acionados aparecem aqui.
+              </Text>
+            </View>
+          }
+        />
+      ) : (
+      <>
       {doses.length > 0 && (
         <View style={styles.resumo}>
           <Text style={styles.resumoNumero}>{adesao}%</Text>
@@ -134,6 +203,8 @@ export default function HistoricoScreen() {
           </View>
         }
       />
+      </>
+      )}
     </View>
   );
 }
@@ -157,6 +228,32 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 26,
     fontWeight: '700',
+    color: '#FFFFFF',
+  },
+  abas: {
+    flexDirection: 'row',
+    gap: 8,
+    marginBottom: 16,
+  },
+  aba: {
+    flex: 1,
+    paddingVertical: 10,
+    borderRadius: 12,
+    alignItems: 'center',
+    backgroundColor: '#111827',
+    borderWidth: 1,
+    borderColor: '#1F2937',
+  },
+  abaAtiva: {
+    backgroundColor: '#1F2937',
+    borderColor: '#3B82F6',
+  },
+  abaTexto: {
+    color: '#9CA3AF',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  abaTextoAtivo: {
     color: '#FFFFFF',
   },
   resumo: {

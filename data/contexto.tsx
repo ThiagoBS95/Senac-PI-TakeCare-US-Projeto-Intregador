@@ -7,13 +7,14 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useS
 
 import * as armazenamento from './armazenamento';
 import * as notificacoes from './notificacoes';
-import { Banco, BANCO_VAZIO, Dose, Idoso, Medicamento } from './tipos';
+import { Alerta, Banco, BANCO_VAZIO, Dose, Idoso, Medicamento } from './tipos';
 
 type ValorContexto = {
   carregando: boolean;
   idosos: Idoso[];
   medicamentos: Medicamento[];
   doses: Dose[];
+  alertas: Alerta[];
   /** null enquanto a verificação inicial não terminou. */
   lembretesAtivos: boolean | null;
   salvarIdoso: (dados: Omit<Idoso, 'id' | 'criadoEm'>, id?: string) => Promise<void>;
@@ -21,6 +22,8 @@ type ValorContexto = {
   salvarMedicamento: (dados: Omit<Medicamento, 'id' | 'criadoEm'>, id?: string) => Promise<void>;
   excluirMedicamento: (id: string) => Promise<void>;
   registrarDose: (dados: Omit<Dose, 'id'>) => Promise<void>;
+  registrarAlerta: (dados: Omit<Alerta, 'id'>) => Promise<string | null>;
+  anotarAcaoDoAlerta: (alertaId: string, acao: 'ligou' | 'mensagem') => Promise<void>;
   medicamentosDoIdoso: (idosoId: string) => Medicamento[];
   ativarLembretes: () => Promise<boolean>;
 };
@@ -109,6 +112,16 @@ export function ProvedorDados({ children }: { children: React.ReactNode }) {
     setBanco(await armazenamento.registrarDose(dados));
   }, []);
 
+  const registrarAlerta = useCallback(async (dados: Omit<Alerta, 'id'>) => {
+    const atualizado = await armazenamento.registrarAlerta(dados);
+    setBanco(atualizado);
+    return atualizado.alertas[atualizado.alertas.length - 1]?.id ?? null;
+  }, []);
+
+  const anotarAcaoDoAlerta = useCallback(async (alertaId: string, acao: 'ligou' | 'mensagem') => {
+    setBanco(await armazenamento.anotarAcaoDoAlerta(alertaId, acao));
+  }, []);
+
   const medicamentosDoIdoso = useCallback(
     (idosoId: string) => banco.medicamentos.filter((m) => m.idosoId === idosoId),
     [banco.medicamentos],
@@ -120,12 +133,15 @@ export function ProvedorDados({ children }: { children: React.ReactNode }) {
       idosos: banco.idosos,
       medicamentos: banco.medicamentos,
       doses: banco.doses,
+      alertas: banco.alertas,
       lembretesAtivos,
       salvarIdoso,
       excluirIdoso,
       salvarMedicamento,
       excluirMedicamento,
       registrarDose,
+      registrarAlerta,
+      anotarAcaoDoAlerta,
       medicamentosDoIdoso,
       ativarLembretes,
     }),
@@ -138,6 +154,8 @@ export function ProvedorDados({ children }: { children: React.ReactNode }) {
       salvarMedicamento,
       excluirMedicamento,
       registrarDose,
+      registrarAlerta,
+      anotarAcaoDoAlerta,
       medicamentosDoIdoso,
       ativarLembretes,
     ],
