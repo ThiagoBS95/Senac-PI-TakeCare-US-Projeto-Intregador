@@ -99,6 +99,7 @@ React Native 0.81 · Expo SDK 54 · Expo Router 6 · TypeScript · AsyncStorage 
 - Denyzard Ubirajara Larios Moreira
 - Marlon Rogério Correia Santana
 - Matheus Nunes Friedrich
+- Thais Sousa Rocha
 - Thiago Barbosa Silva
 - Werick Luiz Monteiro
 
