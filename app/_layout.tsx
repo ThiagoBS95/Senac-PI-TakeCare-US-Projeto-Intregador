@@ -3,6 +3,7 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
+import { OuvinteNotificacoes } from '@/components/ouvinte-notificacoes';
 import { ProvedorDados } from '@/data/contexto';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
@@ -15,6 +16,7 @@ export default function RootLayout() {
 
   return (
     <ProvedorDados>
+      <OuvinteNotificacoes />
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -23,6 +25,8 @@ export default function RootLayout() {
           <Stack.Screen name="cadastro-medicamento" options={{ headerShown: false }} />
           <Stack.Screen name="idosos" options={{ headerShown: false }} />
           <Stack.Screen name="medicamentos" options={{ headerShown: false }} />
+          <Stack.Screen name="historico" options={{ headerShown: false }} />
+          <Stack.Screen name="dose" options={{ headerShown: false }} />
         </Stack>
         <StatusBar style="light" />
       </ThemeProvider>
