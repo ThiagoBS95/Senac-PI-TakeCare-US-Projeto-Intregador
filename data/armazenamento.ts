@@ -4,7 +4,7 @@
  */
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { Banco, BANCO_VAZIO, Dose, Idoso, Medicamento, VERSAO_ESQUEMA } from './tipos';
+import { Alerta, Banco, BANCO_VAZIO, Dose, Idoso, Medicamento, VERSAO_ESQUEMA } from './tipos';
 
 const CHAVE = '@takecare/banco';
 
@@ -28,6 +28,8 @@ function migrar(bruto: any): Banco {
     idosos: Array.isArray(bruto.idosos) ? bruto.idosos : [],
     medicamentos: Array.isArray(bruto.medicamentos) ? bruto.medicamentos : [],
     doses: Array.isArray(bruto.doses) ? bruto.doses : [],
+    // Chegou na versão 2: bancos antigos não têm esta lista.
+    alertas: Array.isArray(bruto.alertas) ? bruto.alertas : [],
   };
 
   banco.versao = VERSAO_ESQUEMA;
@@ -73,6 +75,7 @@ export async function excluirIdoso(id: string): Promise<Banco> {
   banco.idosos = banco.idosos.filter((i) => i.id !== id);
   banco.medicamentos = banco.medicamentos.filter((m) => m.idosoId !== id);
   banco.doses = banco.doses.filter((d) => d.idosoId !== id);
+  banco.alertas = banco.alertas.filter((a) => a.idosoId !== id);
   await gravar(banco);
   return banco;
 }
@@ -108,6 +111,27 @@ export async function excluirMedicamento(id: string): Promise<Banco> {
 export async function registrarDose(dados: Omit<Dose, 'id'>): Promise<Banco> {
   const banco = await carregar();
   banco.doses.push({ ...dados, id: novoId() });
+  await gravar(banco);
+  return banco;
+}
+
+// ----------------------------------------------------------------- alertas
+
+export async function registrarAlerta(dados: Omit<Alerta, 'id'>): Promise<Banco> {
+  const banco = await carregar();
+  banco.alertas.push({ ...dados, id: novoId() });
+  await gravar(banco);
+  return banco;
+}
+
+export async function anotarAcaoDoAlerta(
+  alertaId: string,
+  acao: 'ligou' | 'mensagem',
+): Promise<Banco> {
+  const banco = await carregar();
+  banco.alertas = banco.alertas.map((a) =>
+    a.id === alertaId && !a.acoes.includes(acao) ? { ...a, acoes: [...a.acoes, acao] } : a,
+  );
   await gravar(banco);
   return banco;
 }

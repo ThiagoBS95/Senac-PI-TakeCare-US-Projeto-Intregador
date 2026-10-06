@@ -37,3 +37,20 @@ Alguns fabricantes (Xiaomi, Samsung, Motorola) matam aplicativos em segundo plan
 por economia de bateria, e o lembrete não chega. Se os passos 5 ou 12 falharem,
 verifique em **Configurações → Bateria → Sem restrições** para o TakeCare antes
 de concluir que é defeito do código.
+
+---
+
+# Eixo C — emergência (aparelho Android)
+
+| # | Passo | Esperado |
+|---|---|---|
+| 13 | Tocar em ALERTA SOS no painel | Abre a tela de emergência e pede permissão de localização |
+| 14 | Conceder a permissão | A tela mostra as coordenadas e a precisão em metros |
+| 15 | Tocar em "Ligar para <responsável>" | O discador abre com o número do responsável já preenchido |
+| 16 | Voltar e tocar em "Enviar mensagem" | Abre o WhatsApp (ou o SMS) com o texto pronto e o link do mapa |
+| 17 | Abrir o link do mapa na mensagem | O Google Maps mostra a posição correta |
+| 18 | Negar a permissão de localização e acionar de novo | A tela avisa "Sem localização" e **ainda assim** oferece ligar e mandar mensagem |
+| 19 | Desligar o GPS do aparelho e acionar | Mesma coisa: o pedido de ajuda não é bloqueado |
+| 20 | Acionar sem telefone cadastrado | A tela orienta a cadastrar o telefone do responsável |
+| 21 | Abrir qualquer tela interna (lista, histórico) | O botão SOS flutuante aparece no canto |
+| 22 | Ver Histórico → aba Emergências | Cada acionamento aparece com data, hora, localização e as ações feitas |

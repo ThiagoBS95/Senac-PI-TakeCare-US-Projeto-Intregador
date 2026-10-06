@@ -3,6 +3,7 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
+import { BotaoSOS } from '@/components/botao-sos';
 import { OuvinteNotificacoes } from '@/components/ouvinte-notificacoes';
 import { ProvedorDados } from '@/data/contexto';
 import { useColorScheme } from '@/hooks/use-color-scheme';
@@ -27,7 +28,9 @@ export default function RootLayout() {
           <Stack.Screen name="medicamentos" options={{ headerShown: false }} />
           <Stack.Screen name="historico" options={{ headerShown: false }} />
           <Stack.Screen name="dose" options={{ headerShown: false }} />
+          <Stack.Screen name="emergencia" options={{ headerShown: false, presentation: 'modal' }} />
         </Stack>
+        <BotaoSOS />
         <StatusBar style="light" />
       </ThemeProvider>
     </ProvedorDados>
