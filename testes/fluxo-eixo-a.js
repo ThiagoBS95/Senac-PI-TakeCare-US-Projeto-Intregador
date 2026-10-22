@@ -12,6 +12,7 @@
  * Navegue sempre por cliques: o export estático serve as rotas como .html,
  * então abrir /idosos direto pela URL devolve 404 do servidor, não do app.
  */
+const { chromium } = require('playwright');
 const EXE = '/home/angelo/.cache/ms-playwright/chromium-1228/chrome-linux64/chrome';
 const BASE = 'http://localhost:8130';
 const OUT = process.argv[2];
