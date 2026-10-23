@@ -4,15 +4,38 @@ O que só pode ser verificado em aparelho real, com *development build*.
 O Expo Go **não dispara notificação agendada** — se tentar por lá, nada acontece
 e a conclusão é falsa.
 
-## Preparar o build (uma vez)
+## O APK já está compilado
+
+`android/app/build/outputs/apk/debug/app-debug.apk` (73 MB, 22/10/2026). É um
+build completo: instala e abre sozinho, sem precisar de computador na mesma rede.
+
+Para instalar no aparelho, por cabo:
 
 ```bash
-npx expo run:android          # precisa de Android Studio instalado
-# ou, pela nuvem, sem Android Studio:
-npx eas build --profile development --platform android
+adb install -r app-debug.apk
 ```
 
-Instale o APK gerado no aparelho e rode `npx expo start --dev-client`.
+Ou copie o arquivo para o celular e abra pelo gerenciador de arquivos, liberando
+"instalar de fontes desconhecidas" quando o Android perguntar.
+
+Para recompilar, limitando às arquiteturas necessárias (muito mais rápido):
+
+```bash
+cd android
+./gradlew assembleDebug -PreactNativeArchitectures=x86_64   # emulador
+./gradlew assembleDebug -PreactNativeArchitectures=arm64-v8a # aparelho real
+```
+
+### Por que não dá para rodar isto em emulador nesta máquina
+
+O emulador do Android congela antes de iniciar o sistema convidado — zero uso de
+CPU logo após `Windows Hypervisor Platform accelerator is operational`. Reproduz
+igual em Android 34 e 37, com e sem janela, com e sem aceleração por hardware e
+nos três modos de GPU. A máquina de desenvolvimento tem um Intel i7-2600 (2011,
+sem AVX2), abaixo do que o emulador atual exige.
+
+Não é perda: os passos 5, 12 e a armadilha de economia de bateria **só existem em
+aparelho real** — um emulador jamais os validaria.
 
 ## Roteiro
 
@@ -67,3 +90,17 @@ de concluir que é defeito do código.
 | 26 | Ativar o TalkBack (leitor de tela) e percorrer o painel | Cada botão é anunciado pelo que faz: "Idosos", "Acionar alerta de emergência", "Acessibilidade" |
 | 27 | Com TalkBack ligado, abrir a lista de idosos | Os botões de editar e excluir são anunciados com o nome da pessoa |
 | 28 | Aumentar a fonte do sistema para o máximo (Configurações do Android) | O aplicativo continua legível e utilizável |
+
+
+---
+
+## Como registrar o resultado
+
+Marque cada passo com **OK**, **FALHOU** ou **N/A** e, quando falhar, anote o
+aparelho (marca, modelo, versão do Android) e o que apareceu na tela. Um passo
+que falha em um aparelho e passa em outro é informação útil — quase sempre é a
+economia de bateria do fabricante, não o código.
+
+| Aparelho | Android | Passos OK | Falhas | Observações |
+|---|---|---|---|---|
+|  |  |  |  |  |

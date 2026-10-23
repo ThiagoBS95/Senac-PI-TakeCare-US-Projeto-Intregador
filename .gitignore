@@ -41,3 +41,6 @@ app-example
 # generated native folders
 /ios
 /android
+
+# build web usado para gravar o vídeo de demonstração
+dist-video/
