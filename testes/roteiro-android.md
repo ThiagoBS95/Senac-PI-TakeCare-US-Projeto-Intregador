@@ -1,30 +1,51 @@
 # Roteiro de teste em aparelho Android
 
-O que só pode ser verificado em aparelho real, com *development build*.
-O Expo Go **não dispara notificação agendada** — se tentar por lá, nada acontece
-e a conclusão é falsa.
+O que só pode ser verificado em aparelho real. O Expo Go **não dispara
+notificação agendada** — se tentar por lá, nada acontece e a conclusão é falsa.
 
 ## O APK já está compilado
 
-`android/app/build/outputs/apk/debug/app-debug.apk` (73 MB, 22/10/2026). É um
-build completo: instala e abre sozinho, sem precisar de computador na mesma rede.
+`android/app/build/outputs/apk/release/app-release.apk` (62 MB). Instala e abre
+sozinho: o JavaScript vem embutido e não é preciso computador na mesma rede.
 
 Para instalar no aparelho, por cabo:
 
 ```bash
-adb install -r app-debug.apk
+adb install -r app-release.apk
 ```
 
 Ou copie o arquivo para o celular e abra pelo gerenciador de arquivos, liberando
 "instalar de fontes desconhecidas" quando o Android perguntar.
 
-Para recompilar, limitando às arquiteturas necessárias (muito mais rápido):
+### Tem de ser `assembleRelease`, não `assembleDebug`
+
+O projeto usa `expo-dev-client`. No build de **debug** o bundle JavaScript não é
+embutido: o aplicativo abre numa tela "Development Build" pedindo `npx expo
+start` e um servidor em `localhost:8081`, e não há como seguir o roteiro. Só o
+build de **release** embute o bundle.
+
+Para conferir antes de distribuir:
+
+```bash
+unzip -l app-release.apk | grep index.android.bundle
+```
+
+Se essa linha não aparecer, o APK é o de desenvolvimento e não serve.
+
+Para recompilar:
 
 ```bash
 cd android
-./gradlew assembleDebug -PreactNativeArchitectures=x86_64   # emulador
-./gradlew assembleDebug -PreactNativeArchitectures=arm64-v8a # aparelho real
+./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a,armeabi-v7a
 ```
+
+Compilar as quatro arquiteturas leva mais de 45 minutos; essas duas cobrem
+qualquer celular Android em uso. `x86_64` é só para emulador — o Android recusa
+a instalação desse APK em aparelho real.
+
+No Windows, o build precisa sair de um caminho curto (por exemplo uma junção
+`C:\tc` criada com `mklink /J`): a partir da pasta do projeto os caminhos passam
+de 260 caracteres e o `ninja` falha com `error: Stat(...)`.
 
 ### Por que não dá para rodar isto em emulador nesta máquina
 
