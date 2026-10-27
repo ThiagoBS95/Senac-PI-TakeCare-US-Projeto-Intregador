@@ -13,12 +13,14 @@ import {
 } from 'react-native';
 
 import { ALVO_MINIMO, Tema } from '@/constants/tema';
+import { useTema } from '@/data/preferencias';
 import { useEstilos } from '@/hooks/use-estilos';
 import { useDados } from '@/data/contexto';
 import { Medicamento } from '@/data/tipos';
 
 export default function MedicamentosScreen() {
   const styles = useEstilos(criarEstilos);
+  const tema = useTema();
   const router = useRouter();
   const { idosos, medicamentos, carregando, excluirMedicamento } = useDados();
 
@@ -50,13 +52,13 @@ export default function MedicamentosScreen() {
           onPress={() => router.back()}
           accessibilityRole="button"
           accessibilityLabel="Voltar">
-          <Ionicons name="arrow-back" size={24} color="#fff" />
+          <Ionicons name="arrow-back" size={24} color={tema.cor.texto} />
         </TouchableOpacity>
         <Text style={styles.title}>Medicamentos</Text>
       </View>
 
       {carregando ? (
-        <ActivityIndicator color="#3B82F6" size="large" style={styles.centro} />
+        <ActivityIndicator color={tema.cor.primaria} size="large" style={styles.centro} />
       ) : (
         <SectionList
           sections={secoes}
@@ -79,7 +81,7 @@ export default function MedicamentosScreen() {
                 <View style={styles.horarios}>
                   {item.horarios.map((h) => (
                     <View key={h} style={styles.horarioChip}>
-                      <Ionicons name="time-outline" size={14} color="#93C5FD" />
+                      <Ionicons name="time-outline" size={14} color={tema.cor.destaque} />
                       <Text style={styles.horarioTexto}>{h}</Text>
                     </View>
                   ))}
@@ -97,7 +99,7 @@ export default function MedicamentosScreen() {
                   }
                   accessibilityRole="button"
                   accessibilityLabel={`Registrar dose de ${item.nome}`}>
-                  <Ionicons name="checkmark-done" size={22} color="#86EFAC" />
+                  <Ionicons name="checkmark-done" size={22} color={tema.cor.sucessoClaro} />
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.acao}
@@ -106,21 +108,21 @@ export default function MedicamentosScreen() {
                   }
                   accessibilityRole="button"
                   accessibilityLabel={`Editar ${item.nome}`}>
-                  <Ionicons name="create-outline" size={22} color="#93C5FD" />
+                  <Ionicons name="create-outline" size={22} color={tema.cor.destaque} />
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.acao}
                   onPress={() => confirmarExclusao(item)}
                   accessibilityRole="button"
                   accessibilityLabel={`Excluir ${item.nome}`}>
-                  <Ionicons name="trash-outline" size={22} color="#FCA5A5" />
+                  <Ionicons name="trash-outline" size={22} color={tema.cor.perigoClaro} />
                 </TouchableOpacity>
               </View>
             </View>
           )}
           ListEmptyComponent={
             <View style={styles.vazio}>
-              <Ionicons name="medkit-outline" size={48} color="#4B5563" />
+              <Ionicons name="medkit-outline" size={48} color={tema.cor.apagado} />
               <Text style={styles.vazioTitulo}>Nenhum idoso cadastrado</Text>
               <Text style={styles.vazioTexto}>
                 Cadastre uma pessoa idosa para registrar os medicamentos dela.
@@ -135,7 +137,7 @@ export default function MedicamentosScreen() {
           style={styles.novo}
           onPress={() => router.push('/cadastro-medicamento')}
           accessibilityRole="button">
-          <Ionicons name="add" size={20} color="#fff" />
+          <Ionicons name="add" size={20} color={tema.cor.primariaTexto} />
           <Text style={styles.novoTexto}>Cadastrar medicamento</Text>
         </TouchableOpacity>
       )}

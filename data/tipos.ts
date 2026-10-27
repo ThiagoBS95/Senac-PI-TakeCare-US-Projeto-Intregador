@@ -6,7 +6,8 @@
 export type Idoso = {
   id: string;
   nome: string;
-  idade: string;
+  /** Data de nascimento em ISO (AAAA-MM-DD). A idade é derivada dela. */
+  nascimento: string;
   responsavel: string;
   telefoneResponsavel: string;
   criadoEm: string;
@@ -56,7 +57,7 @@ export type Banco = {
   alertas: Alerta[];
 };
 
-export const VERSAO_ESQUEMA = 2;
+export const VERSAO_ESQUEMA = 3;
 
 export const BANCO_VAZIO: Banco = {
   versao: VERSAO_ESQUEMA,
@@ -65,3 +66,14 @@ export const BANCO_VAZIO: Banco = {
   doses: [],
   alertas: [],
 };
+
+/** Idade em anos completos na data de hoje. */
+export function idadeEm(nascimento: string): number | null {
+  const d = new Date(nascimento);
+  if (Number.isNaN(d.getTime())) return null;
+  const hoje = new Date();
+  let anos = hoje.getFullYear() - d.getFullYear();
+  const m = hoje.getMonth() - d.getMonth();
+  if (m < 0 || (m === 0 && hoje.getDate() < d.getDate())) anos -= 1;
+  return anos >= 0 && anos <= 130 ? anos : null;
+}

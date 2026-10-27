@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { Tema } from '@/constants/tema';
+import { useTema } from '@/data/preferencias';
 import { useEstilos } from '@/hooks/use-estilos';
 import { useDados } from '@/data/contexto';
 import * as notificacoes from '@/data/notificacoes';
@@ -15,6 +16,7 @@ import { Dose } from '@/data/tipos';
  */
 export default function DoseScreen() {
   const styles = useEstilos(criarEstilos);
+  const tema = useTema();
   const router = useRouter();
   const { medicamentoId, horario } = useLocalSearchParams<{
     medicamentoId?: string;
@@ -50,7 +52,7 @@ export default function DoseScreen() {
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
         <View style={styles.vazio}>
-          <Ionicons name="help-circle-outline" size={48} color="#4B5563" />
+          <Ionicons name="help-circle-outline" size={48} color={tema.cor.apagado} />
           <Text style={styles.vazioTitulo}>Medicamento não encontrado</Text>
           <Text style={styles.vazioTexto}>
             O cadastro pode ter sido excluído depois que o lembrete foi criado.
@@ -69,7 +71,7 @@ export default function DoseScreen() {
 
       <View style={styles.cabecalho}>
         <View style={styles.selo}>
-          <Ionicons name="alarm" size={28} color="#fff" />
+          <Ionicons name="alarm" size={28} color={tema.cor.primariaTexto} />
         </View>
         <Text style={styles.horario}>{horario || 'Agora'}</Text>
         <Text style={styles.nome}>{medicamento.nome}</Text>
@@ -83,7 +85,7 @@ export default function DoseScreen() {
           onPress={() => responder('tomada')}
           disabled={enviando}
           accessibilityRole="button">
-          <Ionicons name="checkmark-circle" size={26} color="#fff" />
+          <Ionicons name="checkmark-circle" size={26} color={tema.cor.primariaTexto} />
           <Text style={styles.botaoTexto}>Tomou</Text>
         </TouchableOpacity>
 
@@ -92,7 +94,7 @@ export default function DoseScreen() {
           onPress={() => responder('adiada')}
           disabled={enviando}
           accessibilityRole="button">
-          <Ionicons name="time" size={26} color="#fff" />
+          <Ionicons name="time" size={26} color={tema.cor.primariaTexto} />
           <Text style={styles.botaoTexto}>Adiar 15 minutos</Text>
         </TouchableOpacity>
 
@@ -101,7 +103,7 @@ export default function DoseScreen() {
           onPress={() => responder('nao_tomada')}
           disabled={enviando}
           accessibilityRole="button">
-          <Ionicons name="close-circle" size={26} color="#fff" />
+          <Ionicons name="close-circle" size={26} color={tema.cor.primariaTexto} />
           <Text style={styles.botaoTexto}>Não tomou</Text>
         </TouchableOpacity>
       </View>

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { Tema } from '@/constants/tema';
+import { useTema } from '@/data/preferencias';
 import { useEstilos } from '@/hooks/use-estilos';
 import { useDados } from '@/data/contexto';
 import * as emergencia from '@/data/emergencia';
@@ -21,6 +22,7 @@ const MOTIVOS: Record<string, string> = {
 
 export default function EmergenciaScreen() {
   const styles = useEstilos(criarEstilos);
+  const tema = useTema();
   const router = useRouter();
   const { idosoId } = useLocalSearchParams<{ idosoId?: string }>();
   const { idosos, registrarAlerta, anotarAcaoDoAlerta } = useDados();
@@ -87,7 +89,7 @@ export default function EmergenciaScreen() {
 
       <ScrollView contentContainerStyle={styles.conteudo}>
         <View style={styles.selo}>
-          <Ionicons name="warning" size={34} color="#fff" />
+          <Ionicons name="warning" size={34} color={tema.cor.primariaTexto} />
         </View>
         <Text style={styles.titulo}>Emergência acionada</Text>
         <Text style={styles.subtitulo}>
@@ -97,7 +99,7 @@ export default function EmergenciaScreen() {
         <View style={styles.cartao}>
           {estado.fase === 'buscando' && (
             <View style={styles.linha}>
-              <Ionicons name="location" size={20} color="#93C5FD" />
+              <Ionicons name="location" size={20} color={tema.cor.destaque} />
               <Text style={styles.cartaoTexto}>Obtendo a localização…</Text>
             </View>
           )}
@@ -105,7 +107,7 @@ export default function EmergenciaScreen() {
           {estado.fase === 'ok' && (
             <>
               <View style={styles.linha}>
-                <Ionicons name="location" size={20} color="#86EFAC" />
+                <Ionicons name="location" size={20} color={tema.cor.sucessoClaro} />
                 <Text style={styles.cartaoTexto}>Localização obtida</Text>
               </View>
               <Text style={styles.coordenadas}>
@@ -120,7 +122,7 @@ export default function EmergenciaScreen() {
           {estado.fase === 'indisponivel' && (
             <>
               <View style={styles.linha}>
-                <Ionicons name="alert-circle" size={20} color="#FCD34D" />
+                <Ionicons name="alert-circle" size={20} color={tema.cor.aviso} />
                 <Text style={styles.cartaoTexto}>Sem localização</Text>
               </View>
               <Text style={styles.coordenadas}>{estado.motivo} O pedido de ajuda continua valendo.</Text>
@@ -135,7 +137,7 @@ export default function EmergenciaScreen() {
               onPress={ligar}
               accessibilityRole="button"
               accessibilityLabel={`Ligar para ${idoso!.responsavel}`}>
-              <Ionicons name="call" size={26} color="#fff" />
+              <Ionicons name="call" size={26} color={tema.cor.primariaTexto} />
               <View>
                 <Text style={styles.botaoTexto}>Ligar para {idoso!.responsavel}</Text>
                 <Text style={styles.botaoDetalhe}>{idoso!.telefoneResponsavel}</Text>
@@ -146,7 +148,7 @@ export default function EmergenciaScreen() {
               style={[styles.botao, styles.mensagem]}
               onPress={mandarMensagem}
               accessibilityRole="button">
-              <Ionicons name="chatbubble-ellipses" size={26} color="#fff" />
+              <Ionicons name="chatbubble-ellipses" size={26} color={tema.cor.primariaTexto} />
               <View>
                 <Text style={styles.botaoTexto}>Enviar mensagem</Text>
                 <Text style={styles.botaoDetalhe}>
@@ -157,7 +159,7 @@ export default function EmergenciaScreen() {
           </View>
         ) : (
           <View style={styles.aviso}>
-            <Ionicons name="information-circle" size={22} color="#FCD34D" />
+            <Ionicons name="information-circle" size={22} color={tema.cor.aviso} />
             <Text style={styles.avisoTexto}>
               {idoso
                 ? 'Cadastre o telefone do responsável para que o alerta possa ligar e enviar mensagem.'
@@ -269,7 +271,7 @@ const criarEstilos = (t: Tema) =>
     fontWeight: '700',
   },
   botaoDetalhe: {
-    color: t.cor.textoMedio,
+    color: t.cor.primariaTextoFraco,
     fontSize: t.fonte(13),
     marginTop: 2,
   },

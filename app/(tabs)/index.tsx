@@ -64,7 +64,7 @@ export default function HomeScreen() {
             onPress={() => router.push('/idosos')}
             accessibilityRole="button">
             <View style={styles.buttonIcon}>
-              <Ionicons name="people" size={24} color="#fff" />
+              <Ionicons name="people" size={24} color={tema.cor.primariaTexto} />
             </View>
             <View style={styles.buttonContent}>
               <Text style={styles.buttonTitle}>Idosos</Text>
@@ -72,7 +72,7 @@ export default function HomeScreen() {
                 {idosos.length === 0 ? 'Cadastrar o primeiro perfil' : 'Ver, editar e cadastrar'}
               </Text>
             </View>
-            <Ionicons name="chevron-forward" size={20} color="#6B7280" />
+            <Ionicons name="chevron-forward" size={20} color={tema.cor.apagado} />
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -80,13 +80,13 @@ export default function HomeScreen() {
             onPress={() => router.push('/medicamentos')}
             accessibilityRole="button">
             <View style={styles.buttonIcon}>
-              <Ionicons name="medkit" size={24} color="#fff" />
+              <Ionicons name="medkit" size={24} color={tema.cor.primariaTexto} />
             </View>
             <View style={styles.buttonContent}>
               <Text style={styles.buttonTitle}>Medicamentos</Text>
               <Text style={styles.buttonDescription}>Horários, dosagem e lembretes</Text>
             </View>
-            <Ionicons name="chevron-forward" size={20} color="#6B7280" />
+            <Ionicons name="chevron-forward" size={20} color={tema.cor.apagado} />
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -94,7 +94,7 @@ export default function HomeScreen() {
             onPress={() => router.push('/historico')}
             accessibilityRole="button">
             <View style={styles.buttonIcon}>
-              <Ionicons name="document-text" size={24} color="#fff" />
+              <Ionicons name="document-text" size={24} color={tema.cor.primariaTexto} />
             </View>
             <View style={styles.buttonContent}>
               <Text style={styles.buttonTitle}>Histórico</Text>
@@ -102,7 +102,7 @@ export default function HomeScreen() {
                 {doses.length === 0 ? 'Nenhuma dose registrada' : `${doses.length} dose(s) registradas`}
               </Text>
             </View>
-            <Ionicons name="chevron-forward" size={20} color="#6B7280" />
+            <Ionicons name="chevron-forward" size={20} color={tema.cor.apagado} />
           </TouchableOpacity>
 
           {lembretesAtivos === false && medicamentos.length > 0 && (
@@ -110,7 +110,7 @@ export default function HomeScreen() {
               style={styles.aviso}
               onPress={ativarLembretes}
               accessibilityRole="button">
-              <Ionicons name="notifications-off" size={22} color="#FCD34D" />
+              <Ionicons name="notifications-off" size={22} color={tema.cor.aviso} />
               <View style={styles.buttonContent}>
                 <Text style={styles.avisoTitulo}>Lembretes desativados</Text>
                 <Text style={styles.avisoTexto}>
@@ -126,7 +126,7 @@ export default function HomeScreen() {
             accessibilityRole="button"
             accessibilityLabel="Acionar alerta de emergência">
             <View style={styles.alertContent}>
-              <Ionicons name="warning" size={28} color="#fff" />
+              <Ionicons name="warning" size={28} color={tema.cor.primariaTexto} />
               <Text style={styles.alertText}>ALERTA SOS</Text>
             </View>
           </TouchableOpacity>

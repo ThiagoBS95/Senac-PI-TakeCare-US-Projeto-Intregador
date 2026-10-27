@@ -32,6 +32,20 @@ function migrar(bruto: any): Banco {
     alertas: Array.isArray(bruto.alertas) ? bruto.alertas : [],
   };
 
+  // Versão 3: a idade em anos deu lugar à data de nascimento. Cadastros antigos
+  // guardavam só o número, então a data recuperada é aproximada — 1º de janeiro
+  // do ano correspondente — e pode ser corrigida ao editar a pessoa.
+  banco.idosos = banco.idosos.map((i: any) => {
+    if (i && typeof i === 'object' && !i.nascimento && i.idade) {
+      const anos = Number(i.idade);
+      const { idade, ...resto } = i;
+      return Number.isFinite(anos) && anos > 0
+        ? { ...resto, nascimento: `${new Date().getFullYear() - anos}-01-01` }
+        : { ...resto, nascimento: '' };
+    }
+    return i;
+  });
+
   banco.versao = VERSAO_ESQUEMA;
   return banco;
 }

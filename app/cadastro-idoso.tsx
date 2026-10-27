@@ -15,21 +15,47 @@ import {
 } from 'react-native';
 
 import { ALVO_MINIMO, Tema } from '@/constants/tema';
+import { useTema } from '@/data/preferencias';
 import { useEstilos } from '@/hooks/use-estilos';
 import { useDados } from '@/data/contexto';
+import { idadeEm } from '@/data/tipos';
+
+/** "31/12/1950" -> "1950-12-31"; devolve '' se a data não existir no calendário. */
+function paraIso(texto: string): string {
+  const m = texto.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if (!m) return '';
+  const [, dia, mes, ano] = m;
+  const d = new Date(Number(ano), Number(mes) - 1, Number(dia));
+  const existe =
+    d.getFullYear() === Number(ano) &&
+    d.getMonth() === Number(mes) - 1 &&
+    d.getDate() === Number(dia);
+  return existe ? `${ano}-${mes}-${dia}` : '';
+}
+
+/** Caminho inverso, para preencher o campo ao editar. */
+function paraTexto(iso: string): string {
+  const m = (iso ?? '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  return m ? `${m[3]}/${m[2]}/${m[1]}` : '';
+}
 
 export default function CadastroIdosoScreen() {
   const styles = useEstilos(criarEstilos);
+  const tema = useTema();
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id?: string }>();
   const { idosos, salvarIdoso } = useDados();
 
   const emEdicao = Boolean(id);
   const [nome, setNome] = useState('');
-  const [idade, setIdade] = useState('');
+  const [nascimento, setNascimento] = useState('');
   const [responsavel, setResponsavel] = useState('');
   const [telefoneResponsavel, setTelefoneResponsavel] = useState('');
   const [salvando, setSalvando] = useState(false);
+
+  // Confere em voz alta o que a data significa, para evitar erro de digitação.
+  const anosDigitados = idadeEm(paraIso(nascimento));
+  const idadeTexto = anosDigitados === null ? '' : `${anosDigitados} anos`;
 
   // Em edição, carrega o cadastro existente nos campos.
   useEffect(() => {
@@ -37,10 +63,18 @@ export default function CadastroIdosoScreen() {
     const atual = idosos.find((i) => i.id === id);
     if (!atual) return;
     setNome(atual.nome);
-    setIdade(atual.idade);
+    setNascimento(paraTexto(atual.nascimento));
     setResponsavel(atual.responsavel);
     setTelefoneResponsavel(atual.telefoneResponsavel ?? '');
   }, [id, idosos]);
+
+  // Digita só os números; as barras entram sozinhas.
+  const formatarData = (texto: string) => {
+    const d = texto.replace(/\D/g, '').slice(0, 8);
+    if (d.length <= 2) return d;
+    if (d.length <= 4) return `${d.slice(0, 2)}/${d.slice(2)}`;
+    return `${d.slice(0, 2)}/${d.slice(2, 4)}/${d.slice(4)}`;
+  };
 
   const formatarTelefone = (texto: string) => {
     const digitos = texto.replace(/\D/g, '').slice(0, 11);
@@ -53,14 +87,20 @@ export default function CadastroIdosoScreen() {
   };
 
   const handleSalvar = async () => {
-    if (!nome.trim() || !idade.trim() || !responsavel.trim()) {
+    if (!nome.trim() || !nascimento.trim() || !responsavel.trim()) {
       Alert.alert('Erro', 'Por favor, preencha todos os campos.');
       return;
     }
 
-    const anos = Number(idade);
-    if (!Number.isInteger(anos) || anos < 1 || anos > 120) {
-      Alert.alert('Idade inválida', 'Informe a idade em anos, entre 1 e 120.');
+    const iso = paraIso(nascimento);
+    if (!iso) {
+      Alert.alert('Data inválida', 'Informe a data de nascimento no formato dia/mês/ano.');
+      return;
+    }
+
+    const anos = idadeEm(iso);
+    if (anos === null || anos < 1 || anos > 120) {
+      Alert.alert('Data inválida', 'A data informada não corresponde a uma idade entre 1 e 120 anos.');
       return;
     }
 
@@ -69,7 +109,7 @@ export default function CadastroIdosoScreen() {
       await salvarIdoso(
         {
           nome: nome.trim(),
-          idade: idade.trim(),
+          nascimento: iso,
           responsavel: responsavel.trim(),
           telefoneResponsavel: telefoneResponsavel.trim(),
         },
@@ -96,7 +136,7 @@ export default function CadastroIdosoScreen() {
           onPress={() => router.back()}
           accessibilityRole="button"
           accessibilityLabel="Voltar">
-          <Ionicons name="arrow-back" size={24} color="#fff" />
+          <Ionicons name="arrow-back" size={24} color={tema.cor.texto} />
         </TouchableOpacity>
         <Text style={styles.title}>{emEdicao ? 'Editar Idoso' : 'Cadastro de Idoso'}</Text>
       </View>
@@ -109,22 +149,24 @@ export default function CadastroIdosoScreen() {
             value={nome}
             onChangeText={setNome}
             placeholder="Digite o nome completo"
-            placeholderTextColor="#6B7280"
+            placeholderTextColor={tema.cor.apagado}
             accessibilityLabel="Nome do idoso"
           />
         </View>
 
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>Idade</Text>
+          <Text style={styles.label}>Data de nascimento</Text>
           <TextInput
             style={styles.input}
-            value={idade}
-            onChangeText={(t) => setIdade(t.replace(/\D/g, '').slice(0, 3))}
-            placeholder="Digite a idade"
-            placeholderTextColor="#6B7280"
+            value={nascimento}
+            onChangeText={(t) => setNascimento(formatarData(t))}
+            placeholder="dia/mês/ano"
+            placeholderTextColor={tema.cor.apagado}
             keyboardType="numeric"
-            accessibilityLabel="Idade"
+            maxLength={10}
+            accessibilityLabel="Data de nascimento"
           />
+          {idadeTexto ? <Text style={styles.ajuda}>{idadeTexto}</Text> : null}
         </View>
 
         <View style={styles.inputGroup}>
@@ -134,7 +176,7 @@ export default function CadastroIdosoScreen() {
             value={responsavel}
             onChangeText={setResponsavel}
             placeholder="Digite o nome do responsável"
-            placeholderTextColor="#6B7280"
+            placeholderTextColor={tema.cor.apagado}
             accessibilityLabel="Nome do responsável"
           />
         </View>
@@ -146,7 +188,7 @@ export default function CadastroIdosoScreen() {
             value={telefoneResponsavel}
             onChangeText={(t) => setTelefoneResponsavel(formatarTelefone(t))}
             placeholder="(11) 90000-0000"
-            placeholderTextColor="#6B7280"
+            placeholderTextColor={tema.cor.apagado}
             keyboardType="phone-pad"
             accessibilityLabel="Telefone do responsável"
           />
