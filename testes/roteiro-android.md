@@ -17,35 +17,47 @@ adb install -r app-release.apk
 Ou copie o arquivo para o celular e abra pelo gerenciador de arquivos, liberando
 "instalar de fontes desconhecidas" quando o Android perguntar.
 
-### Tem de ser `assembleRelease`, não `assembleDebug`
+### Como recompilar
 
-O projeto usa `expo-dev-client`. No build de **debug** o bundle JavaScript não é
-embutido: o aplicativo abre numa tela "Development Build" pedindo `npx expo
-start` e um servidor em `localhost:8081`, e não há como seguir o roteiro. Só o
-build de **release** embute o bundle.
-
-Para conferir antes de distribuir:
+O bundle JavaScript **precisa ser gerado no WSL**. O Metro que o Gradle executa
+(Node do Windows) produz um pacote defeituoso: o aplicativo instala, abre e morre
+com `TypeError: Cannot read property '<hook>' of null` — nenhum hook do React
+funciona, mesmo num componente mínimo. O mesmo código empacotado no WSL funciona.
 
 ```bash
-unzip -l app-release.apk | grep index.android.bundle
+# 1. pacote JavaScript, no WSL
+npx expo export --platform android --output-dir /tmp/bundle-prod
+
+# 2. parte nativa, pelo Windows, a partir de um caminho curto
+#    (de C:\Users\...\Senac-PI-... os caminhos passam de 260 caracteres
+#     e o ninja falha com "error: Stat(...)"; use uma junção: mklink /J C:\tc <projeto>)
+cd C:\tc\android
+gradlew.bat assembleRelease -PreactNativeArchitectures=arm64-v8a,armeabi-v7a
+
+# 3. trocar o bundle dentro do APK e assinar de novo
+#    (descartar META-INF/*.{RSA,SF,MF}: a assinatura antiga não vale mais)
+zipalign -p -f 4 trocado.apk alinhado.apk
+apksigner sign --ks android/app/debug.keystore --ks-pass pass:android \
+  --key-pass pass:android --ks-key-alias androiddebugkey \
+  --out TakeCare.apk alinhado.apk
 ```
 
-Se essa linha não aparecer, o APK é o de desenvolvimento e não serve.
+**Antes de recompilar, apague `android/app/build/outputs/apk/release`.** O Gradle
+marca `:app:packageRelease` como `UP-TO-DATE` e mantém o APK antigo mesmo com
+bundle novo — dá para testar o arquivo errado sem perceber.
 
-Para recompilar:
+### Tem de ser release, não debug
+
+No build de **debug** o bundle não é embutido: o aplicativo abre numa tela
+"Development Build" pedindo `npx expo start` e um servidor em `localhost:8081`,
+e não há como seguir o roteiro. Conferir antes de distribuir:
 
 ```bash
-cd android
-./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a,armeabi-v7a
+unzip -l TakeCare.apk | grep index.android.bundle
 ```
 
-Compilar as quatro arquiteturas leva mais de 45 minutos; essas duas cobrem
-qualquer celular Android em uso. `x86_64` é só para emulador — o Android recusa
-a instalação desse APK em aparelho real.
-
-No Windows, o build precisa sair de um caminho curto (por exemplo uma junção
-`C:\tc` criada com `mklink /J`): a partir da pasta do projeto os caminhos passam
-de 260 caracteres e o `ninja` falha com `error: Stat(...)`.
+Se a linha não aparecer, o APK é o de desenvolvimento e não serve. `x86_64` só
+roda em emulador — o Android recusa a instalação desse APK em aparelho real.
 
 ### Por que não dá para rodar isto em emulador nesta máquina
 
@@ -122,6 +134,16 @@ aparelho (marca, modelo, versão do Android) e o que apareceu na tela. Um passo
 que falha em um aparelho e passa em outro é informação útil — quase sempre é a
 economia de bateria do fabricante, não o código.
 
-| Aparelho | Android | Passos OK | Falhas | Observações |
+| Aparelho | Android | Passos verificados | Falhas | Observações |
 |---|---|---|---|---|
+| Moto G86 5G | 16 | abertura, cadastro, medicamento com 3 horários, confirmação de dose, histórico, emergência, acessibilidade | nenhuma | Angelo, 26/10 |
+| (Marlon) | — | tela inicial, cadastro de idoso, cadastro de medicamento com 08:00/16:00/20:00, SOS com **localização real obtida (±14 m)**, SMS com link do mapa, ligação para o contato | nenhuma | 26/10, à noite |
 |  |  |  |  |  |
+
+### Evidência da emergência em aparelho
+
+O acionamento do SOS no aparelho do Marlon devolveu **coordenadas reais com
+precisão de 14 metros**, abriu o SMS com o link do Google Maps apontando o
+endereço certo e disparou a ligação para o contato cadastrado. Isso cobre os
+passos 13 a 17, que o navegador nunca conseguiu demonstrar: no build web a
+localização sempre falha, por falta de GPS.

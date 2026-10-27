@@ -8,6 +8,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { usePathname, useRouter } from 'expo-router';
 import { Tema } from '@/constants/tema';
+import { useTema } from '@/data/preferencias';
 import { useEstilos } from '@/hooks/use-estilos';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
@@ -16,6 +17,7 @@ const OCULTO_EM = ['/emergencia', '/dose'];
 
 export function BotaoSOS() {
   const styles = useEstilos(criarEstilos);
+  const tema = useTema();
   const router = useRouter();
   const caminho = usePathname();
 
@@ -29,7 +31,7 @@ export function BotaoSOS() {
       accessibilityRole="button"
       accessibilityLabel="Acionar alerta de emergência"
       accessibilityHint="Abre a tela de emergência com a localização e o contato do responsável">
-      <Ionicons name="warning" size={22} color="#fff" />
+      <Ionicons name="warning" size={22} color={tema.cor.primariaTexto} />
       <Text style={styles.texto}>SOS</Text>
     </TouchableOpacity>
   );

@@ -11,14 +11,19 @@ import {
 } from 'react-native';
 
 import { ALVO_MINIMO, Tema } from '@/constants/tema';
+import { useTema } from '@/data/preferencias';
 import { useEstilos } from '@/hooks/use-estilos';
 import { useDados } from '@/data/contexto';
 import { Dose } from '@/data/tipos';
 
-const ROTULO: Record<Dose['situacao'], { texto: string; cor: string; icone: keyof typeof Ionicons.glyphMap }> = {
-  tomada: { texto: 'Tomada', cor: '#16A34A', icone: 'checkmark-circle' },
-  adiada: { texto: 'Adiada', cor: '#CA8A04', icone: 'time' },
-  nao_tomada: { texto: 'Não tomada', cor: '#DC2626', icone: 'close-circle' },
+// A cor vem do tema, não fixa aqui: o mapa guarda só o nome do token.
+const ROTULO: Record<
+  Dose['situacao'],
+  { texto: string; token: 'sucesso' | 'aviso' | 'perigo'; icone: keyof typeof Ionicons.glyphMap }
+> = {
+  tomada: { texto: 'Tomada', token: 'sucesso', icone: 'checkmark-circle' },
+  adiada: { texto: 'Adiada', token: 'aviso', icone: 'time' },
+  nao_tomada: { texto: 'Não tomada', token: 'perigo', icone: 'close-circle' },
 };
 
 function diaDe(iso: string): string {
@@ -35,6 +40,7 @@ function horaDe(iso: string): string {
 
 export default function HistoricoScreen() {
   const styles = useEstilos(criarEstilos);
+  const tema = useTema();
   const router = useRouter();
   const { doses, alertas, medicamentos, idosos } = useDados();
   const [filtroIdoso, setFiltroIdoso] = useState<string | null>(null);
@@ -67,7 +73,7 @@ export default function HistoricoScreen() {
           onPress={() => router.back()}
           accessibilityRole="button"
           accessibilityLabel="Voltar">
-          <Ionicons name="arrow-back" size={24} color="#fff" />
+          <Ionicons name="arrow-back" size={24} color={tema.cor.texto} />
         </TouchableOpacity>
         <Text style={styles.title}>Histórico de doses</Text>
       </View>
@@ -103,7 +109,7 @@ export default function HistoricoScreen() {
             const temLocal = item.latitude !== null && item.longitude !== null;
             return (
               <View style={styles.card}>
-                <Ionicons name="warning" size={24} color="#DC2626" />
+                <Ionicons name="warning" size={24} color={tema.cor.perigo} />
                 <View style={styles.cardTexto}>
                   <Text style={styles.cardNome}>
                     {new Date(item.acionadoEm).toLocaleString('pt-BR', {
@@ -130,7 +136,7 @@ export default function HistoricoScreen() {
           }}
           ListEmptyComponent={
             <View style={styles.vazio}>
-              <Ionicons name="shield-checkmark-outline" size={48} color="#4B5563" />
+              <Ionicons name="shield-checkmark-outline" size={48} color={tema.cor.apagado} />
               <Text style={styles.vazioTitulo}>Nenhum acionamento</Text>
               <Text style={styles.vazioTexto}>
                 Os alertas de emergência acionados aparecem aqui.
@@ -182,7 +188,7 @@ export default function HistoricoScreen() {
           const rotulo = ROTULO[item.situacao];
           return (
             <View style={styles.card}>
-              <Ionicons name={rotulo.icone} size={24} color={rotulo.cor} />
+              <Ionicons name={rotulo.icone} size={24} color={tema.cor[rotulo.token]} />
               <View style={styles.cardTexto}>
                 <Text style={styles.cardNome}>
                   {medicamento?.nome ?? 'Medicamento excluído'}
@@ -198,7 +204,7 @@ export default function HistoricoScreen() {
         }}
         ListEmptyComponent={
           <View style={styles.vazio}>
-            <Ionicons name="document-text-outline" size={48} color="#4B5563" />
+            <Ionicons name="document-text-outline" size={48} color={tema.cor.apagado} />
             <Text style={styles.vazioTitulo}>Nenhuma dose registrada</Text>
             <Text style={styles.vazioTexto}>
               Quando um lembrete for respondido, o registro aparece aqui.

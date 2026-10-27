@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 
 import { ALVO_MINIMO, Tema } from '@/constants/tema';
+import { useTema } from '@/data/preferencias';
 import { useEstilos } from '@/hooks/use-estilos';
 import { useDados } from '@/data/contexto';
 
@@ -32,6 +33,7 @@ function normalizarHorario(bruto: string): string | null {
 
 export default function CadastroMedicamentoScreen() {
   const styles = useEstilos(criarEstilos);
+  const tema = useTema();
   const router = useRouter();
   const { id, idosoId: idosoParam } = useLocalSearchParams<{ id?: string; idosoId?: string }>();
   const { idosos, medicamentos, salvarMedicamento } = useDados();
@@ -112,12 +114,12 @@ export default function CadastroMedicamentoScreen() {
         <StatusBar barStyle="light-content" />
         <View style={styles.header}>
           <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-            <Ionicons name="arrow-back" size={24} color="#fff" />
+            <Ionicons name="arrow-back" size={24} color={tema.cor.texto} />
           </TouchableOpacity>
           <Text style={styles.title}>Cadastro de Medicamento</Text>
         </View>
         <View style={styles.vazio}>
-          <Ionicons name="person-add-outline" size={48} color="#4B5563" />
+          <Ionicons name="person-add-outline" size={48} color={tema.cor.apagado} />
           <Text style={styles.vazioTitulo}>Cadastre um idoso primeiro</Text>
           <Text style={styles.vazioTexto}>
             Todo medicamento pertence a uma pessoa idosa. Faça o cadastro dela para continuar.
@@ -144,7 +146,7 @@ export default function CadastroMedicamentoScreen() {
           onPress={() => router.back()}
           accessibilityRole="button"
           accessibilityLabel="Voltar">
-          <Ionicons name="arrow-back" size={24} color="#fff" />
+          <Ionicons name="arrow-back" size={24} color={tema.cor.texto} />
         </TouchableOpacity>
         <Text style={styles.title}>
           {emEdicao ? 'Editar Medicamento' : 'Cadastro de Medicamento'}
@@ -178,7 +180,7 @@ export default function CadastroMedicamentoScreen() {
             value={nome}
             onChangeText={setNome}
             placeholder="Digite o nome do medicamento"
-            placeholderTextColor="#6B7280"
+            placeholderTextColor={tema.cor.apagado}
             accessibilityLabel="Nome do medicamento"
           />
         </View>
@@ -190,7 +192,7 @@ export default function CadastroMedicamentoScreen() {
             value={dosagem}
             onChangeText={setDosagem}
             placeholder="Ex: 1 comprimido"
-            placeholderTextColor="#6B7280"
+            placeholderTextColor={tema.cor.apagado}
             accessibilityLabel="Dosagem"
           />
         </View>
@@ -203,7 +205,7 @@ export default function CadastroMedicamentoScreen() {
               value={novoHorario}
               onChangeText={setNovoHorario}
               placeholder="08:00"
-              placeholderTextColor="#6B7280"
+              placeholderTextColor={tema.cor.apagado}
               keyboardType="numbers-and-punctuation"
               onSubmitEditing={adicionarHorario}
               accessibilityLabel="Novo horário"
@@ -213,7 +215,7 @@ export default function CadastroMedicamentoScreen() {
               onPress={adicionarHorario}
               accessibilityRole="button"
               accessibilityLabel="Adicionar horário">
-              <Ionicons name="add" size={24} color="#fff" />
+              <Ionicons name="add" size={24} color={tema.cor.primariaTexto} />
             </TouchableOpacity>
           </View>
 
@@ -227,7 +229,7 @@ export default function CadastroMedicamentoScreen() {
                   accessibilityRole="button"
                   accessibilityLabel={`Remover horário ${h}`}>
                   <Text style={styles.horarioTexto}>{h}</Text>
-                  <Ionicons name="close" size={16} color="#9CA3AF" />
+                  <Ionicons name="close" size={16} color={tema.cor.apagado} />
                 </TouchableOpacity>
               ))}
             </View>

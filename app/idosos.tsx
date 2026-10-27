@@ -12,12 +12,21 @@ import {
 } from 'react-native';
 
 import { ALVO_MINIMO, Tema } from '@/constants/tema';
+import { useTema } from '@/data/preferencias';
 import { useEstilos } from '@/hooks/use-estilos';
 import { useDados } from '@/data/contexto';
+import { idadeEm } from '@/data/tipos';
 import { Idoso } from '@/data/tipos';
+
+/** Texto da idade na lista; cadastros migrados podem não ter data válida. */
+function descreverIdade(nascimento: string): string {
+  const anos = idadeEm(nascimento);
+  return anos === null ? 'idade não informada' : `${anos} anos`;
+}
 
 export default function IdososScreen() {
   const styles = useEstilos(criarEstilos);
+  const tema = useTema();
   const router = useRouter();
   const { idosos, carregando, excluirIdoso, medicamentosDoIdoso } = useDados();
 
@@ -44,7 +53,7 @@ export default function IdososScreen() {
         <View style={styles.cardTexto}>
           <Text style={styles.cardNome}>{item.nome}</Text>
           <Text style={styles.cardDetalhe}>
-            {item.idade} anos · responsável: {item.responsavel}
+            {descreverIdade(item.nascimento)} · responsável: {item.responsavel}
           </Text>
           <Text style={styles.cardDetalhe}>
             {quantosRemedios === 0
@@ -59,14 +68,14 @@ export default function IdososScreen() {
             onPress={() => router.push({ pathname: '/cadastro-idoso', params: { id: item.id } })}
             accessibilityRole="button"
             accessibilityLabel={`Editar ${item.nome}`}>
-            <Ionicons name="create-outline" size={22} color="#93C5FD" />
+            <Ionicons name="create-outline" size={22} color={tema.cor.destaque} />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.acao}
             onPress={() => confirmarExclusao(item)}
             accessibilityRole="button"
             accessibilityLabel={`Excluir ${item.nome}`}>
-            <Ionicons name="trash-outline" size={22} color="#FCA5A5" />
+            <Ionicons name="trash-outline" size={22} color={tema.cor.perigoClaro} />
           </TouchableOpacity>
         </View>
       </View>
@@ -83,13 +92,13 @@ export default function IdososScreen() {
           onPress={() => router.back()}
           accessibilityRole="button"
           accessibilityLabel="Voltar">
-          <Ionicons name="arrow-back" size={24} color="#fff" />
+          <Ionicons name="arrow-back" size={24} color={tema.cor.texto} />
         </TouchableOpacity>
         <Text style={styles.title}>Idosos cadastrados</Text>
       </View>
 
       {carregando ? (
-        <ActivityIndicator color="#3B82F6" size="large" style={styles.centro} />
+        <ActivityIndicator color={tema.cor.primaria} size="large" style={styles.centro} />
       ) : (
         <FlatList
           data={idosos}
@@ -98,7 +107,7 @@ export default function IdososScreen() {
           contentContainerStyle={styles.lista}
           ListEmptyComponent={
             <View style={styles.vazio}>
-              <Ionicons name="people-outline" size={48} color="#4B5563" />
+              <Ionicons name="people-outline" size={48} color={tema.cor.apagado} />
               <Text style={styles.vazioTitulo}>Nenhum idoso cadastrado</Text>
               <Text style={styles.vazioTexto}>
                 Cadastre a primeira pessoa para começar a registrar medicamentos.
@@ -112,7 +121,7 @@ export default function IdososScreen() {
         style={styles.novo}
         onPress={() => router.push('/cadastro-idoso')}
         accessibilityRole="button">
-        <Ionicons name="person-add" size={20} color="#fff" />
+        <Ionicons name="person-add" size={20} color={tema.cor.primariaTexto} />
         <Text style={styles.novoTexto}>Cadastrar idoso</Text>
       </TouchableOpacity>
     </View>

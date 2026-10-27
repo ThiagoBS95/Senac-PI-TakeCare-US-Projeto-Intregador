@@ -15,12 +15,14 @@ export type Paleta = {
   textoFraco: string;
   primaria: string;
   primariaTexto: string;
+  /** Texto secundário sobre botão colorido. */
+  primariaTextoFraco: string;
   perigo: string;
   sucesso: string;
   aviso: string;
   avisoFundo: string;
   avisoBorda: string;
-  /** Tons claros usados sobre superfícies escuras. */
+  /** Tons de ênfase, legíveis sobre as superfícies do tema. */
   destaque: string;
   sucessoClaro: string;
   perigoClaro: string;
@@ -30,28 +32,33 @@ export type Paleta = {
   neutroEscuro: string;
 };
 
-/** Padrão: fundo escuro, confortável em ambiente com pouca luz. */
+/**
+ * Padrão: claro e sóbrio, no registro de ambiente de saúde — fundo quase branco,
+ * cartões brancos e um azul-esverdeado de apoio. Texto em azul-marinho em vez de
+ * preto puro, que cansa menos a vista em leitura prolongada.
+ */
 export const PALETA_PADRAO: Paleta = {
-  fundo: '#0A0A0A',
-  superficie: '#1F2937',
-  superficieAlta: '#111827',
-  borda: '#374151',
-  texto: '#FFFFFF',
-  textoFraco: '#9CA3AF',
-  primaria: '#3B82F6',
+  fundo: '#F2F6FA',
+  superficie: '#FFFFFF',
+  superficieAlta: '#E8F0F7',
+  borda: '#D5E1EC',
+  texto: '#10293F',
+  textoFraco: '#5B7A94',
+  primaria: '#0E7C86',
   primariaTexto: '#FFFFFF',
-  perigo: '#DC2626',
-  sucesso: '#16A34A',
-  aviso: '#FCD34D',
-  avisoFundo: '#1C1917',
-  avisoBorda: '#78350F',
-  destaque: '#93C5FD',
-  sucessoClaro: '#86EFAC',
-  perigoClaro: '#FCA5A5',
-  textoMedio: '#E5E7EB',
-  apagado: '#6B7280',
-  sucessoFundo: '#064E3B',
-  neutroEscuro: '#334155',
+  primariaTextoFraco: '#E4EFF1',
+  perigo: '#C62828',
+  sucesso: '#2E7D32',
+  aviso: '#8A5A00',
+  avisoFundo: '#FFF8E8',
+  avisoBorda: '#E8C37A',
+  destaque: '#0B6670',
+  sucessoClaro: '#1B5E20',
+  perigoClaro: '#B3261E',
+  textoMedio: '#2C4A63',
+  apagado: '#90A4B8',
+  sucessoFundo: '#E6F4EA',
+  neutroEscuro: '#DCE6F0',
 };
 
 /**
@@ -67,6 +74,7 @@ export const PALETA_CONTRASTE: Paleta = {
   textoFraco: '#F5F5F5',
   primaria: '#1D4ED8',
   primariaTexto: '#FFFFFF',
+  primariaTextoFraco: '#FFFFFF',
   perigo: '#B91C1C',
   sucesso: '#15803D',
   aviso: '#FDE047',
