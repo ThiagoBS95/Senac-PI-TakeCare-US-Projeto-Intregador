@@ -51,11 +51,12 @@
           "defaultChannel": "lembretes-medicamento"
         }
       ],
-      "expo-dev-client"
+      "expo-dev-client",
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true,
-      "reactCompiler": true
+      "reactCompiler": false
     },
     "extra": {
       "router": {},
