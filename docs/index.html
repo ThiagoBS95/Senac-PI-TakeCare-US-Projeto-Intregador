@@ -133,8 +133,8 @@
     height:660px;
     border-radius:30px;
     overflow:hidden;
-    background:#0A0A0A;
-    color:#fff;
+    background:#F2F6FA;
+    color:#10293F;
     font-family:-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
     display:flex;
     flex-direction:column;
@@ -150,19 +150,19 @@
     flex:none;
   }
   .statusbar .bars{display:flex;gap:3px;align-items:flex-end}
-  .statusbar .bars i{display:block;width:3px;background:#E5E7EB;border-radius:1px}
+  .statusbar .bars i{display:block;width:3px;background:#5B7A94;border-radius:1px}
   .statusbar .bars i:nth-child(1){height:5px}
   .statusbar .bars i:nth-child(2){height:8px}
   .statusbar .bars i:nth-child(3){height:11px}
   .statusbar .batt{
-    width:20px;height:10px;border:1.4px solid #E5E7EB;border-radius:3px;
+    width:20px;height:10px;border:1.4px solid #5B7A94;border-radius:3px;
     position:relative;
   }
   .statusbar .batt::before{
-    content:"";position:absolute;inset:1.6px;right:5px;background:#E5E7EB;border-radius:1px;
+    content:"";position:absolute;inset:1.6px;right:5px;background:#5B7A94;border-radius:1px;
   }
   .statusbar .batt::after{
-    content:"";position:absolute;right:-3.5px;top:2.6px;width:2px;height:4px;background:#E5E7EB;border-radius:0 1px 1px 0;
+    content:"";position:absolute;right:-3.5px;top:2.6px;width:2px;height:4px;background:#5B7A94;border-radius:0 1px 1px 0;
   }
 
   .view{display:none;flex:1;flex-direction:column;padding:0 20px;overflow-y:auto}
@@ -171,71 +171,71 @@
   /* home */
   .app-head{text-align:center;margin:26px 0 40px}
   .app-title{font-size:38px;font-weight:800;letter-spacing:-.5px;margin:0 0 6px}
-  .app-sub{font-size:14px;color:#9CA3AF;margin:0}
+  .app-sub{font-size:14px;color:#5B7A94;margin:0}
   .cards{display:flex;flex-direction:column;gap:14px}
   .card{
     display:flex;align-items:center;gap:14px;width:100%;text-align:left;
-    background:#1F2937;border:1px solid #374151;border-radius:18px;
-    padding:17px;color:#fff;cursor:pointer;font:inherit;
+    background:#FFFFFF;border:1px solid #D5E1EC;border-radius:18px;
+    padding:17px;color:#10293F;cursor:pointer;font:inherit;
     transition:transform .12s ease,border-color .12s ease;
   }
-  .card:hover{border-color:#4B5563;transform:translateY(-1px)}
+  .card:hover{border-color:#90A4B8;transform:translateY(-1px)}
   .card:active{transform:translateY(0)}
-  .card:focus-visible{outline:2px solid #3B82F6;outline-offset:2px}
+  .card:focus-visible{outline:2px solid #0E7C86;outline-offset:2px}
   .card .ico{
-    width:44px;height:44px;border-radius:11px;background:#3B82F6;
+    width:44px;height:44px;border-radius:11px;background:#0E7C86;
     display:grid;place-items:center;flex:none;
   }
   .card .ico svg{width:22px;height:22px;fill:#fff}
   .card b{display:block;font-size:16.5px;font-weight:600;margin-bottom:2px}
-  .card span{display:block;font-size:13px;color:#9CA3AF}
+  .card span{display:block;font-size:13px;color:#5B7A94}
 
   .sos{
     margin-top:22px;width:100%;border:0;cursor:pointer;font:inherit;
-    background:#DC2626;color:#fff;border-radius:18px;padding:21px;
+    background:#C62828;color:#fff;border-radius:18px;padding:21px;
     display:flex;align-items:center;justify-content:center;gap:10px;
     font-size:16px;font-weight:700;letter-spacing:1px;
-    box-shadow:0 6px 22px rgba(220,38,38,.42);
+    box-shadow:0 6px 22px rgba(198,40,40,.32);
     transition:background .12s ease;
   }
-  .sos:hover{background:#EF4444}
+  .sos:hover{background:#D32F2F}
   .sos:focus-visible{outline:2px solid #fff;outline-offset:3px}
   .sos svg{width:24px;height:24px;fill:#fff}
 
   .tabbar{
     margin:auto -20px 0;padding:11px 0 16px;
-    border-top:1px solid #1F2937;background:#0D0D0D;
+    border-top:1px solid #D5E1EC;background:#FFFFFF;
     display:flex;flex:none;
   }
-  .tabbar div{flex:1;text-align:center;font-size:11.5px;color:#6B7280}
-  .tabbar div.on{color:#3B82F6}
+  .tabbar div{flex:1;text-align:center;font-size:11.5px;color:#5B7A94}
+  .tabbar div.on{color:#0E7C86}
   .tabbar svg{display:block;margin:0 auto 3px;width:20px;height:20px}
 
   /* formulários */
   .form-head{display:flex;align-items:center;gap:14px;margin:26px 0 32px}
   .back{
-    background:none;border:0;cursor:pointer;padding:6px;color:#fff;
+    background:none;border:0;cursor:pointer;padding:6px;color:#10293F;
     display:grid;place-items:center;border-radius:8px;
   }
-  .back:hover{background:#1F2937}
-  .back:focus-visible{outline:2px solid #3B82F6;outline-offset:1px}
-  .back svg{width:22px;height:22px;fill:#fff}
+  .back:hover{background:#E8F0F7}
+  .back:focus-visible{outline:2px solid #0E7C86;outline-offset:1px}
+  .back svg{width:22px;height:22px;fill:#10293F}
   .form-head h2{font-size:23px;font-weight:700;margin:0;line-height:1.15}
   .field{margin-bottom:20px}
   .field label{display:block;font-size:14.5px;font-weight:500;margin-bottom:7px}
   .field input{
-    width:100%;background:#1F2937;border:1px solid #374151;border-radius:12px;
-    padding:14px 15px;font-size:15px;color:#fff;font-family:inherit;
+    width:100%;background:#FFFFFF;border:1px solid #D5E1EC;border-radius:12px;
+    padding:14px 15px;font-size:15px;color:#10293F;font-family:inherit;
   }
-  .field input::placeholder{color:#6B7280}
-  .field input:focus{outline:none;border-color:#3B82F6}
+  .field input::placeholder{color:#90A4B8}
+  .field input:focus{outline:none;border-color:#0E7C86}
   .save{
     width:100%;border:0;cursor:pointer;font:inherit;margin-top:8px;
-    background:#3B82F6;color:#fff;border-radius:12px;padding:16px;
+    background:#0E7C86;color:#fff;border-radius:12px;padding:16px;
     font-size:15.5px;font-weight:600;
-    box-shadow:0 4px 16px rgba(59,130,246,.32);
+    box-shadow:0 4px 16px rgba(14,124,134,.30);
   }
-  .save:hover{background:#2F76EB}
+  .save:hover{background:#0B6670}
   .save:focus-visible{outline:2px solid #fff;outline-offset:3px}
 
   /* diálogo estilo android */
@@ -245,7 +245,7 @@
   }
   .scrim.is-on{display:grid}
   .dialog{
-    width:100%;background:#22272E;border-radius:16px;padding:22px 22px 10px;
+    width:100%;background:#FFFFFF;border-radius:16px;padding:22px 22px 10px;
     box-shadow:0 20px 40px rgba(0,0,0,.5);
     animation:pop .16s ease-out;
   }
@@ -254,12 +254,12 @@
     .dialog{animation:none}
     .card{transition:none}
   }
-  .dialog h3{margin:0 0 8px;font-size:17px;font-weight:600;color:#fff}
-  .dialog p{margin:0;font-size:14.5px;color:#C6CDD6;line-height:1.5}
+  .dialog h3{margin:0 0 8px;font-size:17px;font-weight:600;color:#10293F}
+  .dialog p{margin:0;font-size:14.5px;color:#2C4A63;line-height:1.5}
   .dialog .row{display:flex;justify-content:flex-end;margin-top:14px}
   .dialog button{
     background:none;border:0;cursor:pointer;font:inherit;
-    color:#60A5FA;font-weight:600;font-size:14.5px;
+    color:#0E7C86;font-weight:600;font-size:14.5px;
     text-transform:uppercase;letter-spacing:.04em;
     padding:10px 14px;border-radius:8px;
   }
@@ -438,7 +438,7 @@
           </button>
           <div class="tabbar">
             <div class="on">
-              <svg viewBox="0 0 24 24" fill="#3B82F6"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+              <svg viewBox="0 0 24 24" fill="#0E7C86"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
               Home
             </div>
             <div title="Tela padrão do template, fora do escopo do MVP">
@@ -461,8 +461,8 @@
             <input id="i-nome" placeholder="Digite o nome completo">
           </div>
           <div class="field">
-            <label for="i-idade">Idade</label>
-            <input id="i-idade" inputmode="numeric" placeholder="Digite a idade">
+            <label for="i-nasc">Data de nascimento</label>
+            <input id="i-nasc" inputmode="numeric" placeholder="dia/mês/ano">
           </div>
           <div class="field">
             <label for="i-resp">Nome do responsável</label>
@@ -522,7 +522,7 @@
         <h2>Fluxo do protótipo</h2>
         <ol>
           <li><button data-go="home" aria-current="true"><span class="n">01</span><span class="t">Painel inicial<span class="d">Entrada do aplicativo</span></span></button></li>
-          <li><button data-go="idoso"><span class="n">02</span><span class="t">Cadastro de Idoso<span class="d">Nome, idade e responsável</span></span></button></li>
+          <li><button data-go="idoso"><span class="n">02</span><span class="t">Cadastro de Idoso<span class="d">Nome, nascimento e responsável</span></span></button></li>
           <li><button data-go="medicamento"><span class="n">03</span><span class="t">Cadastro de Medicamento<span class="d">Nome, horário e dosagem</span></span></button></li>
           <li><button data-go="sos"><span class="n">04</span><span class="t">Alerta SOS<span class="d">Acionamento de emergência</span></span></button></li>
         </ol>
@@ -651,7 +651,7 @@
     if (salvar){
       var qual = salvar.dataset.save;
       var campos = qual === 'idoso'
-        ? ['i-nome','i-idade','i-resp']
+        ? ['i-nome','i-nasc','i-resp']
         : ['m-nome','m-hora','m-dose'];
       var vazio = campos.some(function(id){ return !document.getElementById(id).value.trim(); });
       if (vazio){
