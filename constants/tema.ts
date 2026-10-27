@@ -58,7 +58,7 @@ export const PALETA_PADRAO: Paleta = {
   textoMedio: '#2C4A63',
   apagado: '#90A4B8',
   sucessoFundo: '#E6F4EA',
-  neutroEscuro: '#DCE6F0',
+  neutroEscuro: '#48637D',
 };
 
 /**

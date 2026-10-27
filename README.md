@@ -4,8 +4,9 @@ Aplicativo móvel de apoio ao cuidado e ao monitoramento de pessoas idosas, dese
 Projeto Integrador do curso de Tecnologia em Análise e Desenvolvimento de Sistemas (TADS/TSI)
 do Centro Universitário Senac — EAD.
 
-- **Protótipo navegável:** https://thiagobs95.github.io/Senac-PI-TakeCare-US-Projeto-Intregador/
-- **Vídeo de demonstração (1ª etapa):** https://youtu.be/kh8lHRKAETs
+- **Vídeo de demonstração (2ª etapa):** [`video/TakeCare-demonstracao.mp4`](video/) — 57 s, narrado
+- **Protótipo navegável (1ª etapa):** https://thiagobs95.github.io/Senac-PI-TakeCare-US-Projeto-Intregador/
+- **Vídeo da 1ª etapa:** https://youtu.be/kh8lHRKAETs — telas simuladas, anterior à implementação
 
 ---
 
@@ -26,6 +27,9 @@ A **2ª etapa** implementou as jornadas descritas na documentação:
 Fora do escopo desta etapa: autenticação e vínculo de perfis em servidor — o alerta chega ao
 responsável pelos canais do telefone, não por notificação entre aparelhos.
 
+Verificado em aparelho: o acionamento de emergência devolveu coordenadas reais com precisão de
+14 metros, com a mensagem contendo o link do mapa e a ligação para o contato cadastrado.
+
 ## Testes
 
 ```bash
@@ -44,17 +48,23 @@ roteiro manual em [testes/roteiro-android.md](testes/roteiro-android.md), com 28
 
 ## Como rodar
 
-Pré-requisitos: Node.js 20 ou superior e um aparelho Android (ou emulador).
+**Para só usar o aplicativo**, instale o APK gerado a partir deste repositório: ele embute o
+código e abre sozinho, sem computador na mesma rede. Veja
+[testes/roteiro-android.md](testes/roteiro-android.md) para gerar e instalar.
+
+**Para desenvolver**, é preciso Node.js 20 ou superior:
 
 ```bash
 npm install
-npx expo start
+npx expo start --dev-client
 ```
 
-Leia o código QR com o **Expo Go** para abrir no aparelho.
+> O **Expo Go não serve**: ele não executa notificações agendadas, que são o eixo B inteiro.
+> É preciso um pacote nativo instalado no aparelho.
 
-> As notificações do eixo B exigem um *development build* (`npx expo run:android`), porque o
-> Expo Go não as suporta. Enquanto o eixo B não começa, o Expo Go atende.
+> Ao gerar o APK, o pacote JavaScript **precisa ser montado em ambiente Linux**. O Metro
+> executado pelo Gradle no Windows produz um pacote em que nenhum hook do React funciona —
+> o aplicativo instala, abre e fecha. O procedimento completo está no roteiro.
 
 ---
 
